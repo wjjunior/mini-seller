@@ -1,32 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import type { Lead } from "../types";
-import { fetchLeads } from "../utils/api";
+import { useLeads } from "../hooks/useLeads";
 
 interface LeadsListProps {
   onLeadSelect: (lead: Lead) => void;
 }
 
 const LeadsList: React.FC<LeadsListProps> = ({ onLeadSelect }) => {
-  const [leads, setLeads] = useState<Lead[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    loadLeads();
-  }, []);
-
-  const loadLeads = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const data = await fetchLeads();
-      setLeads(data);
-    } catch {
-      setError("Failed to load leads. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { data: leads = [], isLoading, error, refetch } = useLeads();
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -49,7 +30,7 @@ const LeadsList: React.FC<LeadsListProps> = ({ onLeadSelect }) => {
     return "text-red-600";
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
@@ -60,9 +41,11 @@ const LeadsList: React.FC<LeadsListProps> = ({ onLeadSelect }) => {
   if (error) {
     return (
       <div className="text-center py-8">
-        <p className="text-red-600 mb-4">{error}</p>
+        <p className="text-red-600 mb-4">
+          Failed to load leads. Please try again.
+        </p>
         <button
-          onClick={loadLeads}
+          onClick={() => refetch()}
           className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
         >
           Retry
