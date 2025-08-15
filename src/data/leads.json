@@ -1,0 +1,92 @@
+[
+  {
+    "id": "1",
+    "name": "Jessica Turner",
+    "company": "Green Valley Group",
+    "email": "jessica.turner@greenvalleygroup.com",
+    "source": "Website",
+    "score": 85,
+    "status": "new"
+  },
+  {
+    "id": "2",
+    "name": "Andrew Collins",
+    "company": "InnovaTech Consulting",
+    "email": "andrew.collins@innovatech.com",
+    "source": "LinkedIn",
+    "score": 92,
+    "status": "contacted"
+  },
+  {
+    "id": "3",
+    "name": "Samantha Brooks",
+    "company": "Global Trading Solutions",
+    "email": "samantha.brooks@globaltrading.com",
+    "source": "Referral",
+    "score": 78,
+    "status": "qualified"
+  },
+  {
+    "id": "4",
+    "name": "Richard Evans",
+    "company": "Startup Connect",
+    "email": "richard.evans@startupconnect.com",
+    "source": "Website",
+    "score": 88,
+    "status": "new"
+  },
+  {
+    "id": "5",
+    "name": "Patricia Bennett",
+    "company": "Enterprise Digital Systems",
+    "email": "patricia.bennett@enterprisedigital.com",
+    "source": "Trade Show",
+    "score": 95,
+    "status": "contacted"
+  },
+  {
+    "id": "6",
+    "name": "Christopher Allen",
+    "company": "Dynamic Web Solutions",
+    "email": "christopher.allen@dynamicwebsolutions.com",
+    "source": "Website",
+    "score": 82,
+    "status": "qualified"
+  },
+  {
+    "id": "7",
+    "name": "Lauren Mitchell",
+    "company": "CloudBridge Solutions",
+    "email": "lauren.mitchell@cloudbridge.com",
+    "source": "LinkedIn",
+    "score": 90,
+    "status": "new"
+  },
+  {
+    "id": "8",
+    "name": "Daniel Scott",
+    "company": "FutureTech Innovations",
+    "email": "daniel.scott@futuretech.com",
+    "source": "Referral",
+    "score": 87,
+    "status": "contacted"
+  },
+  {
+    "id": "9",
+    "name": "Olivia Parker",
+    "company": "SmartWay Systems",
+    "email": "olivia.parker@smartway.com",
+    "source": "Website",
+    "score": 79,
+    "status": "disqualified"
+  },
+  {
+    "id": "10",
+    "name": "Ethan Ross",
+    "company": "NextGen Innovations",
+    "email": "ethan.ross@nextgeninnovations.com",
+    "source": "Trade Show",
+    "score": 93,
+    "status": "qualified"
+  }
+]
