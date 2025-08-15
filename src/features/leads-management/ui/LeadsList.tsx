@@ -1,6 +1,6 @@
 import React from "react";
-import type { Lead } from "../types";
-import { useLeads } from "../hooks/useLeads";
+import type { Lead } from "@/entities/lead";
+import { useLeads } from "../lib/useLeads";
 
 interface LeadsListProps {
   onLeadSelect: (lead: Lead) => void;

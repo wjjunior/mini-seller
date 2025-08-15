@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchLeads } from "../utils/api";
-import type { Lead } from "../types";
+import { fetchLeads } from "@/shared/api";
+import type { Lead } from "@/entities/lead";
 
 export const useLeads = () => {
   return useQuery<Lead[]>({

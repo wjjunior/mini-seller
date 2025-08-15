@@ -1,8 +1,10 @@
-import LeadsList from "./components/LeadsList";
+import React from "react";
+import { LeadsList } from "@/features/leads-management";
+import type { Lead } from "@/entities/lead";
 
-function App() {
-  const handleLeadSelect = () => {
-    // Handle lead selection if needed
+const LeadsPage: React.FC = () => {
+  const handleLeadSelect = (lead: Lead) => {
+    console.log("Selected lead:", lead);
   };
 
   return (
@@ -20,13 +22,15 @@ function App() {
 
           <div className="grid grid-cols-1 gap-8">
             <div>
-              <LeadsList onLeadSelect={handleLeadSelect} />
+              <div className="space-y-6">
+                <LeadsList onLeadSelect={handleLeadSelect} />
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
-export default App;
+export default LeadsPage;

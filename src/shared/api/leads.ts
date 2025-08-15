@@ -1,4 +1,4 @@
-import leadsData from "../data/leads.json";
+import leadsData from "../../data/leads.json";
 import type { Lead, Opportunity } from "../types";
 
 const simulateLatency = (ms: number = 500) =>
