@@ -22,10 +22,3 @@ export interface Opportunity {
   accountName: string;
   createdAt: string;
 }
-
-export interface LeadFilters {
-  search: string;
-  status: string;
-  sortBy: "score" | "name" | "company";
-  sortOrder: "asc" | "desc";
-}
