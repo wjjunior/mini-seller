@@ -1,6 +1,8 @@
 import React from "react";
 import type { Lead } from "@/entities/lead";
 import { useLeads } from "../lib/useLeads";
+import { useLeadsFilter } from "../lib/useLeadsFilter";
+import LeadsFilter from "./LeadsFilter";
 
 interface LeadsListProps {
   onLeadSelect: (lead: Lead) => void;
@@ -8,6 +10,13 @@ interface LeadsListProps {
 
 const LeadsList: React.FC<LeadsListProps> = ({ onLeadSelect }) => {
   const { data: leads = [], isLoading, error, refetch } = useLeads();
+  const {
+    searchTerm,
+    setSearchTerm,
+    statusFilter,
+    setStatusFilter,
+    filteredAndSortedLeads,
+  } = useLeadsFilter(leads);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -56,6 +65,14 @@ const LeadsList: React.FC<LeadsListProps> = ({ onLeadSelect }) => {
 
   return (
     <div className="space-y-4">
+      <LeadsFilter
+        searchTerm={searchTerm}
+        onSearchChange={setSearchTerm}
+        statusFilter={statusFilter}
+        onStatusFilterChange={setStatusFilter}
+        filteredCount={filteredAndSortedLeads.length}
+        totalCount={leads.length}
+      />
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
@@ -82,17 +99,19 @@ const LeadsList: React.FC<LeadsListProps> = ({ onLeadSelect }) => {
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
-              {leads.length === 0 ? (
+              {filteredAndSortedLeads.length === 0 ? (
                 <tr>
                   <td
                     colSpan={6}
                     className="px-6 py-4 text-center text-gray-500"
                   >
-                    No leads found
+                    {leads.length === 0
+                      ? "No leads found"
+                      : "No leads match your search criteria"}
                   </td>
                 </tr>
               ) : (
-                leads.map((lead) => (
+                filteredAndSortedLeads.map((lead) => (
                   <tr
                     key={lead.id}
                     onClick={() => onLeadSelect(lead)}
