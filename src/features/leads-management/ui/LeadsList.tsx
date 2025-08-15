@@ -3,6 +3,8 @@ import type { Lead } from "@/entities/lead";
 import { useLeads } from "../lib/useLeads";
 import { useLeadsFilter } from "../lib/useLeadsFilter";
 import LeadsFilter from "./LeadsFilter";
+import SortableTable from "@/shared/ui/SortableTable";
+import type { SortableColumn } from "@/shared/ui/SortableTable";
 
 interface LeadsListProps {
   onLeadSelect: (lead: Lead) => void;
@@ -39,6 +41,59 @@ const LeadsList: React.FC<LeadsListProps> = ({ onLeadSelect }) => {
     return "text-red-600";
   };
 
+  const columns: SortableColumn<Lead>[] = [
+    {
+      key: "name",
+      label: "Name",
+      sortable: true,
+      render: (value) => (
+        <span className="font-medium text-gray-900">{value}</span>
+      ),
+    },
+    {
+      key: "company",
+      label: "Company",
+      sortable: true,
+      render: (value) => <span className="text-gray-500">{value}</span>,
+    },
+    {
+      key: "email",
+      label: "Email",
+      sortable: true,
+      render: (value) => <span className="text-gray-500">{value}</span>,
+    },
+    {
+      key: "source",
+      label: "Source",
+      sortable: true,
+      render: (value) => <span className="text-gray-500">{value}</span>,
+    },
+    {
+      key: "score",
+      label: "Score",
+      sortable: true,
+      render: (value) => (
+        <span className={`font-medium ${getScoreColor(value as number)}`}>
+          {value}
+        </span>
+      ),
+    },
+    {
+      key: "status",
+      label: "Status",
+      sortable: true,
+      render: (value) => (
+        <span
+          className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(
+            value as string
+          )}`}
+        >
+          {value}
+        </span>
+      ),
+    },
+  ];
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -73,85 +128,18 @@ const LeadsList: React.FC<LeadsListProps> = ({ onLeadSelect }) => {
         filteredCount={filteredAndSortedLeads.length}
         totalCount={leads.length}
       />
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Name
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Company
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Email
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Source
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Score
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Status
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {filteredAndSortedLeads.length === 0 ? (
-                <tr>
-                  <td
-                    colSpan={6}
-                    className="px-6 py-4 text-center text-gray-500"
-                  >
-                    {leads.length === 0
-                      ? "No leads found"
-                      : "No leads match your search criteria"}
-                  </td>
-                </tr>
-              ) : (
-                filteredAndSortedLeads.map((lead) => (
-                  <tr
-                    key={lead.id}
-                    onClick={() => onLeadSelect(lead)}
-                    className="hover:bg-gray-50 cursor-pointer"
-                  >
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {lead.name}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {lead.company}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {lead.email}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {lead.source}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm">
-                      <span
-                        className={`font-medium ${getScoreColor(lead.score)}`}
-                      >
-                        {lead.score}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span
-                        className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${getStatusColor(
-                          lead.status
-                        )}`}
-                      >
-                        {lead.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+
+      <SortableTable
+        data={filteredAndSortedLeads}
+        columns={columns}
+        onRowClick={onLeadSelect}
+        emptyMessage={
+          leads.length === 0
+            ? "No leads found"
+            : "No leads match your search criteria"
+        }
+        initialSortConfig={{ key: "score", direction: "desc" }}
+      />
     </div>
   );
 };

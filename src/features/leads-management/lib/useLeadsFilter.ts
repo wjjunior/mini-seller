@@ -21,7 +21,7 @@ export const useLeadsFilter = (leads: Lead[]) => {
       filtered = filtered.filter((lead) => lead.status === statusFilter);
     }
 
-    return filtered.sort((a, b) => b.score - a.score);
+    return filtered;
   }, [leads, searchTerm, statusFilter]);
 
   return {
