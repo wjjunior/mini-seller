@@ -18,11 +18,22 @@ const convertLeadSchema = z.object({
     "Closed Won",
     "Closed Lost",
   ] as const),
-  amount: z.number().optional(),
+  amount: z.string().optional(),
   accountName: z.string().min(1, "Account name is required"),
 });
 
-type ConvertLeadFormData = z.infer<typeof convertLeadSchema>;
+type ConvertLeadFormData = {
+  name: string;
+  stage:
+    | "Prospecting"
+    | "Qualification"
+    | "Proposal"
+    | "Negotiation"
+    | "Closed Won"
+    | "Closed Lost";
+  amount?: string;
+  accountName: string;
+};
 
 interface ConvertLeadModalProps {
   isOpen: boolean;
@@ -63,10 +74,15 @@ const ConvertLeadModal: React.FC<ConvertLeadModalProps> = ({
 
   const handleFormSubmit = async (data: ConvertLeadFormData) => {
     if (lead) {
-      await onSubmit({
+      const transformedData: CreateOpportunityData = {
         ...data,
+        amount:
+          data.amount && data.amount.trim() !== ""
+            ? Number(data.amount)
+            : undefined,
         leadId: lead.id,
-      });
+      };
+      await onSubmit(transformedData);
       reset();
       onClose();
     }
@@ -186,7 +202,7 @@ const ConvertLeadModal: React.FC<ConvertLeadModalProps> = ({
                   <input
                     type="number"
                     id="amount"
-                    {...register("amount", { valueAsNumber: true })}
+                    {...register("amount")}
                     className="w-full px-3 py-2 pr-12 border border-gray-300 rounded-lg text-base text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="Enter amount in dollars"
                     disabled={isLoading}
