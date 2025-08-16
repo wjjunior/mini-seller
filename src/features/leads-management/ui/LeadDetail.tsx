@@ -101,7 +101,12 @@ const LeadDetail: React.FC<LeadDetailProps> = ({
   ];
 
   return (
-    <SlideOver isOpen={isOpen} onClose={onClose} title="Lead Details">
+    <SlideOver
+      isOpen={isOpen}
+      onClose={onClose}
+      title="Lead Details"
+      maxWidth="full"
+    >
       {lead && (
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -140,7 +145,7 @@ const LeadDetail: React.FC<LeadDetailProps> = ({
             <div className="flex justify-start">
               <button
                 type="button"
-                className="flex items-center justify-center px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex items-center justify-center px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto"
                 onClick={() => setIsConvertModalOpen(true)}
                 disabled={isLeadAlreadyConverted}
               >
@@ -151,7 +156,7 @@ const LeadDetail: React.FC<LeadDetailProps> = ({
           </div>
 
           <div className="flex-1 overflow-y-auto space-y-6 py-6">
-            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 sm:p-6 border border-blue-100">
               <div className="flex items-center mb-4">
                 <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
                   <EnvelopeIcon className="w-4 h-4 text-white" />
@@ -180,11 +185,11 @@ const LeadDetail: React.FC<LeadDetailProps> = ({
                           {errors.email.message}
                         </p>
                       )}
-                      <div className="flex space-x-3">
+                      <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
                         <button
                           type="submit"
                           disabled={isSubmitting}
-                          className="flex items-center px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                          className="flex items-center justify-center px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors w-full sm:w-auto"
                         >
                           <CheckIcon className="w-4 h-4 mr-2" />
                           {isSubmitting ? "Saving..." : "Save"}
@@ -193,7 +198,7 @@ const LeadDetail: React.FC<LeadDetailProps> = ({
                           type="button"
                           onClick={handleCancel}
                           disabled={isSubmitting}
-                          className="flex items-center px-4 py-2 bg-gray-600 text-white text-sm font-medium rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                          className="flex items-center justify-center px-4 py-2 bg-gray-600 text-white text-sm font-medium rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors w-full sm:w-auto"
                         >
                           <XMarkIcon className="w-4 h-4 mr-2" />
                           Cancel
@@ -221,7 +226,7 @@ const LeadDetail: React.FC<LeadDetailProps> = ({
               </div>
             </div>
 
-            <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100">
+            <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-4 sm:p-6 border border-green-100">
               <div className="flex items-center mb-4">
                 <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
                   <CheckCircleIcon className="w-4 h-4 text-white" />
@@ -252,7 +257,7 @@ const LeadDetail: React.FC<LeadDetailProps> = ({
               </div>
             </div>
 
-            <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-6 border border-purple-100">
+            <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-4 sm:p-6 border border-purple-100">
               <div className="flex items-center mb-4">
                 <div className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center mr-3 flex-shrink-0">
                   <ChartBarIcon className="w-4 h-4 text-white" />
@@ -280,11 +285,11 @@ const LeadDetail: React.FC<LeadDetailProps> = ({
                       {errors.status.message}
                     </p>
                   )}
-                  <div className="flex space-x-3">
+                  <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3">
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="flex items-center px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                      className="flex items-center justify-center px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors w-full sm:w-auto"
                     >
                       <CheckIcon className="w-4 h-4 mr-2" />
                       {isSubmitting ? "Saving..." : "Save"}
@@ -293,7 +298,7 @@ const LeadDetail: React.FC<LeadDetailProps> = ({
                       type="button"
                       onClick={handleCancel}
                       disabled={isSubmitting}
-                      className="flex items-center px-4 py-2 bg-gray-600 text-white text-sm font-medium rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                      className="flex items-center justify-center px-4 py-2 bg-gray-600 text-white text-sm font-medium rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors w-full sm:w-auto"
                     >
                       <XMarkIcon className="w-4 h-4 mr-2" />
                       Cancel
@@ -326,7 +331,7 @@ const LeadDetail: React.FC<LeadDetailProps> = ({
           <div className="flex justify-end pt-6 border-t border-gray-200">
             <button
               type="button"
-              className="px-6 py-3 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+              className="px-6 py-3 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors w-full sm:w-auto"
               onClick={onClose}
             >
               Close

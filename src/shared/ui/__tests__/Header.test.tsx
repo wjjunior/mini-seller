@@ -19,14 +19,23 @@ describe("Header", () => {
 
   it("renders all navigation tabs", () => {
     render(<Header {...defaultProps} />);
-    expect(screen.getByText("Dashboard")).toBeInTheDocument();
-    expect(screen.getByText("Leads")).toBeInTheDocument();
-    expect(screen.getByText("Opportunities")).toBeInTheDocument();
+    expect(screen.getAllByText("Dashboard")[0]).toBeInTheDocument();
+    expect(screen.getAllByText("Leads")[0]).toBeInTheDocument();
+    expect(screen.getAllByText("Opportunities")[0]).toBeInTheDocument();
   });
 
   it("renders notification and account buttons", () => {
     render(<Header {...defaultProps} />);
-    const notificationButton = screen.getByRole("button", { name: "" });
+    const notificationButton = screen
+      .getAllByRole("button")
+      .find(
+        (button) =>
+          button.querySelector("svg") &&
+          !button.textContent?.includes("Account") &&
+          !button.textContent?.includes("Dashboard") &&
+          !button.textContent?.includes("Leads") &&
+          !button.textContent?.includes("Opportunities")
+      );
     const accountButton = screen.getByRole("button", { name: /account/i });
 
     expect(notificationButton).toBeInTheDocument();
@@ -35,25 +44,27 @@ describe("Header", () => {
 
   it("highlights the active tab correctly", () => {
     render(<Header {...defaultProps} />);
-    const dashboardTab = screen.getByText("Dashboard").closest("button");
-    const leadsTab = screen.getByText("Leads").closest("button");
-    const opportunitiesTab = screen
-      .getByText("Opportunities")
-      .closest("button");
+    const dashboardTabs = screen.getAllByText("Dashboard");
+    const leadsTabs = screen.getAllByText("Leads");
+    const opportunitiesTabs = screen.getAllByText("Opportunities");
 
-    expect(dashboardTab).toHaveClass(
+    const desktopDashboardTab = dashboardTabs[0].closest("button");
+    const desktopLeadsTab = leadsTabs[0].closest("button");
+    const desktopOpportunitiesTab = opportunitiesTabs[0].closest("button");
+
+    expect(desktopDashboardTab).toHaveClass(
       "bg-blue-50",
       "text-blue-700",
       "border-b-2",
       "border-blue-700"
     );
-    expect(leadsTab).not.toHaveClass(
+    expect(desktopLeadsTab).not.toHaveClass(
       "bg-blue-50",
       "text-blue-700",
       "border-b-2",
       "border-blue-700"
     );
-    expect(opportunitiesTab).not.toHaveClass(
+    expect(desktopOpportunitiesTab).not.toHaveClass(
       "bg-blue-50",
       "text-blue-700",
       "border-b-2",
@@ -65,8 +76,8 @@ describe("Header", () => {
     const mockOnTabChange = vi.fn();
     render(<Header {...defaultProps} onTabChange={mockOnTabChange} />);
 
-    const leadsTab = screen.getByText("Leads");
-    fireEvent.click(leadsTab);
+    const leadsTabs = screen.getAllByText("Leads");
+    fireEvent.click(leadsTabs[0]);
 
     expect(mockOnTabChange).toHaveBeenCalledWith("leads");
   });
@@ -75,28 +86,35 @@ describe("Header", () => {
     const mockOnTabChange = vi.fn();
     render(<Header {...defaultProps} onTabChange={mockOnTabChange} />);
 
-    fireEvent.click(screen.getByText("Dashboard"));
+    const dashboardTabs = screen.getAllByText("Dashboard");
+    const leadsTabs = screen.getAllByText("Leads");
+    const opportunitiesTabs = screen.getAllByText("Opportunities");
+
+    fireEvent.click(dashboardTabs[0]);
     expect(mockOnTabChange).toHaveBeenCalledWith("dashboard");
 
-    fireEvent.click(screen.getByText("Leads"));
+    fireEvent.click(leadsTabs[0]);
     expect(mockOnTabChange).toHaveBeenCalledWith("leads");
 
-    fireEvent.click(screen.getByText("Opportunities"));
+    fireEvent.click(opportunitiesTabs[0]);
     expect(mockOnTabChange).toHaveBeenCalledWith("opportunities");
   });
 
   it("renders with different active tab", () => {
     render(<Header {...defaultProps} activeTab="leads" />);
-    const leadsTab = screen.getByText("Leads").closest("button");
-    const dashboardTab = screen.getByText("Dashboard").closest("button");
+    const leadsTabs = screen.getAllByText("Leads");
+    const dashboardTabs = screen.getAllByText("Dashboard");
 
-    expect(leadsTab).toHaveClass(
+    const desktopLeadsTab = leadsTabs[0].closest("button");
+    const desktopDashboardTab = dashboardTabs[0].closest("button");
+
+    expect(desktopLeadsTab).toHaveClass(
       "bg-blue-50",
       "text-blue-700",
       "border-b-2",
       "border-blue-700"
     );
-    expect(dashboardTab).not.toHaveClass(
+    expect(desktopDashboardTab).not.toHaveClass(
       "bg-blue-50",
       "text-blue-700",
       "border-b-2",
@@ -123,8 +141,17 @@ describe("Header", () => {
 
   it("renders notification bell icon", () => {
     render(<Header {...defaultProps} />);
-    const notificationButton = screen.getByRole("button", { name: "" });
-    expect(notificationButton.querySelector("svg")).toBeInTheDocument();
+    const notificationButton = screen
+      .getAllByRole("button")
+      .find(
+        (button) =>
+          button.querySelector("svg") &&
+          !button.textContent?.includes("Account") &&
+          !button.textContent?.includes("Dashboard") &&
+          !button.textContent?.includes("Leads") &&
+          !button.textContent?.includes("Opportunities")
+      );
+    expect(notificationButton?.querySelector("svg")).toBeInTheDocument();
   });
 
   it("renders user account section with icon and text", () => {
@@ -136,13 +163,23 @@ describe("Header", () => {
 
   it("applies hover and focus styles to navigation tabs", () => {
     render(<Header {...defaultProps} />);
-    const inactiveTab = screen.getByText("Leads").closest("button");
+    const leadsTabs = screen.getAllByText("Leads");
+    const inactiveTab = leadsTabs[0].closest("button");
     expect(inactiveTab).toHaveClass("hover:text-gray-700", "hover:bg-gray-50");
   });
 
   it("applies focus styles to buttons", () => {
     render(<Header {...defaultProps} />);
-    const notificationButton = screen.getByRole("button", { name: "" });
+    const notificationButton = screen
+      .getAllByRole("button")
+      .find(
+        (button) =>
+          button.querySelector("svg") &&
+          !button.textContent?.includes("Account") &&
+          !button.textContent?.includes("Dashboard") &&
+          !button.textContent?.includes("Leads") &&
+          !button.textContent?.includes("Opportunities")
+      );
     const accountButton = screen.getByRole("button", { name: /account/i });
 
     expect(notificationButton).toHaveClass(

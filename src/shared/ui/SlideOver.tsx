@@ -5,7 +5,7 @@ interface SlideOverProps {
   onClose: () => void;
   title: string;
   children: React.ReactNode;
-  maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl";
+  maxWidth?: "sm" | "md" | "lg" | "xl" | "2xl" | "full";
 }
 
 const SlideOver: React.FC<SlideOverProps> = ({
@@ -21,6 +21,7 @@ const SlideOver: React.FC<SlideOverProps> = ({
     lg: "max-w-lg",
     xl: "max-w-xl",
     "2xl": "max-w-2xl",
+    full: "max-w-full sm:max-w-md",
   };
 
   return (
