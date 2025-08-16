@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { LeadsList } from "@/features/leads-management";
 import LeadDetail from "@/features/leads-management/ui/LeadDetail";
+import { useUpdateLead } from "@/features/leads-management/lib/useUpdateLead";
 import type { Lead } from "@/entities/lead";
+import type { LeadEditFormData } from "@/features/leads-management/lib/validation";
 
 const LeadsPage: React.FC = () => {
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
   const [isSlideOverOpen, setIsSlideOverOpen] = useState(false);
+  const updateLeadMutation = useUpdateLead();
 
   const handleLeadSelect = (lead: Lead) => {
     setSelectedLead(lead);
@@ -15,6 +18,18 @@ const LeadsPage: React.FC = () => {
   const handleCloseSlideOver = () => {
     setIsSlideOverOpen(false);
     setSelectedLead(null);
+  };
+
+  const handleUpdateLead = async (leadId: string, data: LeadEditFormData) => {
+    try {
+      const updatedLead = await updateLeadMutation.mutateAsync({
+        leadId,
+        data,
+      });
+      setSelectedLead(updatedLead);
+    } catch (error) {
+      console.error("Failed to update lead:", error);
+    }
   };
 
   return (
@@ -44,6 +59,7 @@ const LeadsPage: React.FC = () => {
         lead={selectedLead}
         isOpen={isSlideOverOpen}
         onClose={handleCloseSlideOver}
+        onUpdate={handleUpdateLead}
       />
     </div>
   );
