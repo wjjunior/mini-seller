@@ -88,5 +88,815 @@
     "source": "Trade Show",
     "score": 93,
     "status": "qualified"
+  },
+  {
+    "id": "11",
+    "name": "Isabella Martinez",
+    "company": "TechFlow Solutions",
+    "email": "isabella.martinez@techflow.com",
+    "source": "Website",
+    "score": 86,
+    "status": "new"
+  },
+  {
+    "id": "12",
+    "name": "Michael Johnson",
+    "company": "DataSync Pro",
+    "email": "michael.johnson@datasyncpro.com",
+    "source": "LinkedIn",
+    "score": 91,
+    "status": "contacted"
+  },
+  {
+    "id": "13",
+    "name": "Emma Wilson",
+    "company": "CloudScale Technologies",
+    "email": "emma.wilson@cloudscale.com",
+    "source": "Referral",
+    "score": 84,
+    "status": "qualified"
+  },
+  {
+    "id": "14",
+    "name": "David Brown",
+    "company": "InnovateLab",
+    "email": "david.brown@innovatelab.com",
+    "source": "Website",
+    "score": 89,
+    "status": "new"
+  },
+  {
+    "id": "15",
+    "name": "Sophia Davis",
+    "company": "Digital Dynamics",
+    "email": "sophia.davis@digitaldynamics.com",
+    "source": "Trade Show",
+    "score": 94,
+    "status": "contacted"
+  },
+  {
+    "id": "16",
+    "name": "James Miller",
+    "company": "TechBridge Solutions",
+    "email": "james.miller@techbridge.com",
+    "source": "Website",
+    "score": 81,
+    "status": "qualified"
+  },
+  {
+    "id": "17",
+    "name": "Ava Garcia",
+    "company": "Future Systems Inc",
+    "email": "ava.garcia@futuresystems.com",
+    "source": "LinkedIn",
+    "score": 88,
+    "status": "new"
+  },
+  {
+    "id": "18",
+    "name": "Robert Rodriguez",
+    "company": "Smart Solutions Group",
+    "email": "robert.rodriguez@smartsolutions.com",
+    "source": "Referral",
+    "score": 85,
+    "status": "contacted"
+  },
+  {
+    "id": "19",
+    "name": "Mia Anderson",
+    "company": "CloudTech Innovations",
+    "email": "mia.anderson@cloudtech.com",
+    "source": "Website",
+    "score": 77,
+    "status": "disqualified"
+  },
+  {
+    "id": "20",
+    "name": "William Taylor",
+    "company": "NextWave Technologies",
+    "email": "william.taylor@nextwave.com",
+    "source": "Trade Show",
+    "score": 92,
+    "status": "qualified"
+  },
+  {
+    "id": "21",
+    "name": "Charlotte Thomas",
+    "company": "DataFlow Systems",
+    "email": "charlotte.thomas@dataflow.com",
+    "source": "Website",
+    "score": 87,
+    "status": "new"
+  },
+  {
+    "id": "22",
+    "name": "Benjamin Hernandez",
+    "company": "TechVision Pro",
+    "email": "benjamin.hernandez@techvision.com",
+    "source": "LinkedIn",
+    "score": 90,
+    "status": "contacted"
+  },
+  {
+    "id": "23",
+    "name": "Amelia Moore",
+    "company": "Innovation Hub",
+    "email": "amelia.moore@innovationhub.com",
+    "source": "Referral",
+    "score": 83,
+    "status": "qualified"
+  },
+  {
+    "id": "24",
+    "name": "Lucas Jackson",
+    "company": "Digital Solutions Co",
+    "email": "lucas.jackson@digitalsolutions.com",
+    "source": "Website",
+    "score": 86,
+    "status": "new"
+  },
+  {
+    "id": "25",
+    "name": "Harper Martin",
+    "company": "CloudConnect Pro",
+    "email": "harper.martin@cloudconnect.com",
+    "source": "Trade Show",
+    "score": 93,
+    "status": "contacted"
+  },
+  {
+    "id": "26",
+    "name": "Henry Lee",
+    "company": "TechSynergy Solutions",
+    "email": "henry.lee@techsynergy.com",
+    "source": "Website",
+    "score": 80,
+    "status": "qualified"
+  },
+  {
+    "id": "27",
+    "name": "Evelyn White",
+    "company": "Future Forward Tech",
+    "email": "evelyn.white@futureforward.com",
+    "source": "LinkedIn",
+    "score": 89,
+    "status": "new"
+  },
+  {
+    "id": "28",
+    "name": "Sebastian Clark",
+    "company": "SmartTech Innovations",
+    "email": "sebastian.clark@smarttech.com",
+    "source": "Referral",
+    "score": 84,
+    "status": "contacted"
+  },
+  {
+    "id": "29",
+    "name": "Abigail Lewis",
+    "company": "DataBridge Systems",
+    "email": "abigail.lewis@databridge.com",
+    "source": "Website",
+    "score": 76,
+    "status": "disqualified"
+  },
+  {
+    "id": "30",
+    "name": "Jack Hall",
+    "company": "NextGen Solutions",
+    "email": "jack.hall@nextgen.com",
+    "source": "Trade Show",
+    "score": 91,
+    "status": "qualified"
+  },
+  {
+    "id": "31",
+    "name": "Sofia Young",
+    "company": "TechFlow Pro",
+    "email": "sofia.young@techflowpro.com",
+    "source": "Website",
+    "score": 85,
+    "status": "new"
+  },
+  {
+    "id": "32",
+    "name": "Owen King",
+    "company": "Innovation Labs",
+    "email": "owen.king@innovationlabs.com",
+    "source": "LinkedIn",
+    "score": 88,
+    "status": "contacted"
+  },
+  {
+    "id": "33",
+    "name": "Aria Wright",
+    "company": "Digital Dynamics Pro",
+    "email": "aria.wright@digitaldynamicspro.com",
+    "source": "Referral",
+    "score": 82,
+    "status": "qualified"
+  },
+  {
+    "id": "34",
+    "name": "Daniel Lopez",
+    "company": "CloudTech Solutions",
+    "email": "daniel.lopez@cloudtechsolutions.com",
+    "source": "Website",
+    "score": 87,
+    "status": "new"
+  },
+  {
+    "id": "35",
+    "name": "Scarlett Hill",
+    "company": "TechBridge Pro",
+    "email": "scarlett.hill@techbridgepro.com",
+    "source": "Trade Show",
+    "score": 94,
+    "status": "contacted"
+  },
+  {
+    "id": "36",
+    "name": "Matthew Green",
+    "company": "Future Systems Pro",
+    "email": "matthew.green@futuresystemspro.com",
+    "source": "Website",
+    "score": 79,
+    "status": "qualified"
+  },
+  {
+    "id": "37",
+    "name": "Victoria Adams",
+    "company": "Smart Solutions Pro",
+    "email": "victoria.adams@smartsolutionspro.com",
+    "source": "LinkedIn",
+    "score": 90,
+    "status": "new"
+  },
+  {
+    "id": "38",
+    "name": "Nathan Baker",
+    "company": "CloudTech Group",
+    "email": "nathan.baker@cloudtechgroup.com",
+    "source": "Referral",
+    "score": 83,
+    "status": "contacted"
+  },
+  {
+    "id": "39",
+    "name": "Luna Gonzalez",
+    "company": "NextWave Pro",
+    "email": "luna.gonzalez@nextwavepro.com",
+    "source": "Website",
+    "score": 75,
+    "status": "disqualified"
+  },
+  {
+    "id": "40",
+    "name": "Isaac Nelson",
+    "company": "DataFlow Pro",
+    "email": "isaac.nelson@dataflowpro.com",
+    "source": "Trade Show",
+    "score": 92,
+    "status": "qualified"
+  },
+  {
+    "id": "41",
+    "name": "Grace Carter",
+    "company": "TechVision Solutions",
+    "email": "grace.carter@techvisionsolutions.com",
+    "source": "Website",
+    "score": 86,
+    "status": "new"
+  },
+  {
+    "id": "42",
+    "name": "Ryan Mitchell",
+    "company": "Innovation Hub Pro",
+    "email": "ryan.mitchell@innovationhubpro.com",
+    "source": "LinkedIn",
+    "score": 89,
+    "status": "contacted"
+  },
+  {
+    "id": "43",
+    "name": "Chloe Perez",
+    "company": "Digital Solutions Pro",
+    "email": "chloe.perez@digitalsolutionspro.com",
+    "source": "Referral",
+    "score": 81,
+    "status": "qualified"
+  },
+  {
+    "id": "44",
+    "name": "Adrian Roberts",
+    "company": "CloudConnect Solutions",
+    "email": "adrian.roberts@cloudconnectsolutions.com",
+    "source": "Website",
+    "score": 84,
+    "status": "new"
+  },
+  {
+    "id": "45",
+    "name": "Zoe Turner",
+    "company": "TechSynergy Pro",
+    "email": "zoe.turner@techsynergypro.com",
+    "source": "Trade Show",
+    "score": 93,
+    "status": "contacted"
+  },
+  {
+    "id": "46",
+    "name": "Leo Phillips",
+    "company": "Future Forward Pro",
+    "email": "leo.phillips@futureforwardpro.com",
+    "source": "Website",
+    "score": 78,
+    "status": "qualified"
+  },
+  {
+    "id": "47",
+    "name": "Hazel Campbell",
+    "company": "SmartTech Solutions",
+    "email": "hazel.campbell@smarttechsolutions.com",
+    "source": "LinkedIn",
+    "score": 91,
+    "status": "new"
+  },
+  {
+    "id": "48",
+    "name": "Gabriel Parker",
+    "company": "DataBridge Pro",
+    "email": "gabriel.parker@databridgepro.com",
+    "source": "Referral",
+    "score": 85,
+    "status": "contacted"
+  },
+  {
+    "id": "49",
+    "name": "Violet Evans",
+    "company": "NextGen Pro",
+    "email": "violet.evans@nextgenpro.com",
+    "source": "Website",
+    "score": 74,
+    "status": "disqualified"
+  },
+  {
+    "id": "50",
+    "name": "Julian Edwards",
+    "company": "TechFlow Solutions Pro",
+    "email": "julian.edwards@techflowsolutionspro.com",
+    "source": "Trade Show",
+    "score": 90,
+    "status": "qualified"
+  },
+  {
+    "id": "51",
+    "name": "Lily Collins",
+    "company": "Innovation Labs Pro",
+    "email": "lily.collins@innovationlabspro.com",
+    "source": "Website",
+    "score": 87,
+    "status": "new"
+  },
+  {
+    "id": "52",
+    "name": "Aaron Stewart",
+    "company": "Digital Dynamics Solutions",
+    "email": "aaron.stewart@digitaldynamicssolutions.com",
+    "source": "LinkedIn",
+    "score": 88,
+    "status": "contacted"
+  },
+  {
+    "id": "53",
+    "name": "Nora Morris",
+    "company": "CloudTech Solutions Pro",
+    "email": "nora.morris@cloudtechsolutionspro.com",
+    "source": "Referral",
+    "score": 82,
+    "status": "qualified"
+  },
+  {
+    "id": "54",
+    "name": "Eli Rogers",
+    "company": "TechBridge Solutions Pro",
+    "email": "eli.rogers@techbridgesolutionspro.com",
+    "source": "Website",
+    "score": 86,
+    "status": "new"
+  },
+  {
+    "id": "55",
+    "name": "Ruby Reed",
+    "company": "Future Systems Solutions",
+    "email": "ruby.reed@futuresystemssolutions.com",
+    "source": "Trade Show",
+    "score": 94,
+    "status": "contacted"
+  },
+  {
+    "id": "56",
+    "name": "Caleb Cook",
+    "company": "Smart Solutions Group Pro",
+    "email": "caleb.cook@smartsolutionsgrouppro.com",
+    "source": "Website",
+    "score": 80,
+    "status": "qualified"
+  },
+  {
+    "id": "57",
+    "name": "Penelope Morgan",
+    "company": "CloudTech Innovations Pro",
+    "email": "penelope.morgan@cloudtechinnovationspro.com",
+    "source": "LinkedIn",
+    "score": 89,
+    "status": "new"
+  },
+  {
+    "id": "58",
+    "name": "Asher Bell",
+    "company": "NextWave Technologies Pro",
+    "email": "asher.bell@nextwavetechnologiespro.com",
+    "source": "Referral",
+    "score": 84,
+    "status": "contacted"
+  },
+  {
+    "id": "59",
+    "name": "Layla Murphy",
+    "company": "DataFlow Systems Pro",
+    "email": "layla.murphy@dataflowsystemspro.com",
+    "source": "Website",
+    "score": 73,
+    "status": "disqualified"
+  },
+  {
+    "id": "60",
+    "name": "Mason Bailey",
+    "company": "TechVision Pro Solutions",
+    "email": "mason.bailey@techvisionprosolutions.com",
+    "source": "Trade Show",
+    "score": 91,
+    "status": "qualified"
+  },
+  {
+    "id": "61",
+    "name": "Riley Cooper",
+    "company": "Innovation Hub Solutions",
+    "email": "riley.cooper@innovationhubsolutions.com",
+    "source": "Website",
+    "score": 85,
+    "status": "new"
+  },
+  {
+    "id": "62",
+    "name": "Nova Richardson",
+    "company": "Digital Solutions Group",
+    "email": "nova.richardson@digitalsolutionsgroup.com",
+    "source": "LinkedIn",
+    "score": 87,
+    "status": "contacted"
+  },
+  {
+    "id": "63",
+    "name": "Hunter Cox",
+    "company": "CloudConnect Pro Solutions",
+    "email": "hunter.cox@cloudconnectprosolutions.com",
+    "source": "Referral",
+    "score": 81,
+    "status": "qualified"
+  },
+  {
+    "id": "64",
+    "name": "Stella Howard",
+    "company": "TechSynergy Pro Solutions",
+    "email": "stella.howard@techsynergyprosolutions.com",
+    "source": "Website",
+    "score": 88,
+    "status": "new"
+  },
+  {
+    "id": "65",
+    "name": "Grayson Ward",
+    "company": "Future Forward Tech Pro",
+    "email": "grayson.ward@futureforwardtechpro.com",
+    "source": "Trade Show",
+    "score": 93,
+    "status": "contacted"
+  },
+  {
+    "id": "66",
+    "name": "Bella Torres",
+    "company": "SmartTech Innovations Pro",
+    "email": "bella.torres@smarttechinnovationspro.com",
+    "source": "Website",
+    "score": 79,
+    "status": "qualified"
+  },
+  {
+    "id": "67",
+    "name": "Kayden Peterson",
+    "company": "DataBridge Pro Solutions",
+    "email": "kayden.peterson@databridgeprosolutions.com",
+    "source": "LinkedIn",
+    "score": 90,
+    "status": "new"
+  },
+  {
+    "id": "68",
+    "name": "Savannah Gray",
+    "company": "NextGen Pro Solutions",
+    "email": "savannah.gray@nextgenprosolutions.com",
+    "source": "Referral",
+    "score": 83,
+    "status": "contacted"
+  },
+  {
+    "id": "69",
+    "name": "Parker Ramirez",
+    "company": "TechFlow Pro Solutions",
+    "email": "parker.ramirez@techflowprosolutions.com",
+    "source": "Website",
+    "score": 72,
+    "status": "disqualified"
+  },
+  {
+    "id": "70",
+    "name": "Aurora James",
+    "company": "Innovation Labs Pro Solutions",
+    "email": "aurora.james@innovationlabsprosolutions.com",
+    "source": "Trade Show",
+    "score": 92,
+    "status": "qualified"
+  },
+  {
+    "id": "71",
+    "name": "Xavier Watson",
+    "company": "Digital Dynamics Pro Solutions",
+    "email": "xavier.watson@digitaldynamicsprosolutions.com",
+    "source": "Website",
+    "score": 86,
+    "status": "new"
+  },
+  {
+    "id": "72",
+    "name": "Claire Brooks",
+    "company": "CloudTech Solutions Group",
+    "email": "claire.brooks@cloudtechsolutionsgroup.com",
+    "source": "LinkedIn",
+    "score": 89,
+    "status": "contacted"
+  },
+  {
+    "id": "73",
+    "name": "Brayden Kelly",
+    "company": "TechBridge Pro Solutions",
+    "email": "brayden.kelly@techbridgeprosolutions.com",
+    "source": "Referral",
+    "score": 82,
+    "status": "qualified"
+  },
+  {
+    "id": "74",
+    "name": "Skylar Sanders",
+    "company": "Future Systems Pro Solutions",
+    "email": "skylar.sanders@futuresystemsprosolutions.com",
+    "source": "Website",
+    "score": 87,
+    "status": "new"
+  },
+  {
+    "id": "75",
+    "name": "Atlas Price",
+    "company": "Smart Solutions Pro Group",
+    "email": "atlas.price@smartsolutionsprogroup.com",
+    "source": "Trade Show",
+    "score": 94,
+    "status": "contacted"
+  },
+  {
+    "id": "76",
+    "name": "Paisley Bennett",
+    "company": "CloudTech Group Pro",
+    "email": "paisley.bennett@cloudtechgrouppro.com",
+    "source": "Website",
+    "score": 78,
+    "status": "qualified"
+  },
+  {
+    "id": "77",
+    "name": "Remington Wood",
+    "company": "NextWave Pro Solutions",
+    "email": "remington.wood@nextwaveprosolutions.com",
+    "source": "LinkedIn",
+    "score": 91,
+    "status": "new"
+  },
+  {
+    "id": "78",
+    "name": "Kennedy Barnes",
+    "company": "DataFlow Pro Solutions",
+    "email": "kennedy.barnes@dataflowprosolutions.com",
+    "source": "Referral",
+    "score": 84,
+    "status": "contacted"
+  },
+  {
+    "id": "79",
+    "name": "Jasper Ross",
+    "company": "TechVision Solutions Pro",
+    "email": "jasper.ross@techvisionsolutionspro.com",
+    "source": "Website",
+    "score": 71,
+    "status": "disqualified"
+  },
+  {
+    "id": "80",
+    "name": "Nova Henderson",
+    "company": "Innovation Hub Pro Solutions",
+    "email": "nova.henderson@innovationhubprosolutions.com",
+    "source": "Trade Show",
+    "score": 93,
+    "status": "qualified"
+  },
+  {
+    "id": "81",
+    "name": "Atlas Coleman",
+    "company": "Digital Solutions Pro Group",
+    "email": "atlas.coleman@digitalsolutionsprogroup.com",
+    "source": "Website",
+    "score": 85,
+    "status": "new"
+  },
+  {
+    "id": "82",
+    "name": "Paisley Jenkins",
+    "company": "CloudConnect Solutions Pro",
+    "email": "paisley.jenkins@cloudconnectsolutionspro.com",
+    "source": "LinkedIn",
+    "score": 88,
+    "status": "contacted"
+  },
+  {
+    "id": "83",
+    "name": "Remington Perry",
+    "company": "TechSynergy Pro Solutions",
+    "email": "remington.perry@techsynergyprosolutions.com",
+    "source": "Referral",
+    "score": 81,
+    "status": "qualified"
+  },
+  {
+    "id": "84",
+    "name": "Kennedy Powell",
+    "company": "Future Forward Pro Solutions",
+    "email": "kennedy.powell@futureforwardprosolutions.com",
+    "source": "Website",
+    "score": 86,
+    "status": "new"
+  },
+  {
+    "id": "85",
+    "name": "Jasper Long",
+    "company": "SmartTech Solutions Pro",
+    "email": "jasper.long@smarttechsolutionspro.com",
+    "source": "Trade Show",
+    "score": 92,
+    "status": "contacted"
+  },
+  {
+    "id": "86",
+    "name": "Nova Patterson",
+    "company": "DataBridge Pro Solutions",
+    "email": "nova.patterson@databridgeprosolutions.com",
+    "source": "Website",
+    "score": 77,
+    "status": "qualified"
+  },
+  {
+    "id": "87",
+    "name": "Atlas Hughes",
+    "company": "NextGen Pro Solutions",
+    "email": "atlas.hughes@nextgenprosolutions.com",
+    "source": "LinkedIn",
+    "score": 90,
+    "status": "new"
+  },
+  {
+    "id": "88",
+    "name": "Paisley Flores",
+    "company": "TechFlow Solutions Pro",
+    "email": "paisley.flores@techflowsolutionspro.com",
+    "source": "Referral",
+    "score": 83,
+    "status": "contacted"
+  },
+  {
+    "id": "89",
+    "name": "Remington Butler",
+    "company": "Innovation Labs Pro Solutions",
+    "email": "remington.butler@innovationlabsprosolutions.com",
+    "source": "Website",
+    "score": 70,
+    "status": "disqualified"
+  },
+  {
+    "id": "90",
+    "name": "Kennedy Simmons",
+    "company": "Digital Dynamics Pro Solutions",
+    "email": "kennedy.simmons@digitaldynamicsprosolutions.com",
+    "source": "Trade Show",
+    "score": 94,
+    "status": "qualified"
+  },
+  {
+    "id": "91",
+    "name": "Jasper Foster",
+    "company": "CloudTech Solutions Pro Group",
+    "email": "jasper.foster@cloudtechsolutionsprogroup.com",
+    "source": "Website",
+    "score": 87,
+    "status": "new"
+  },
+  {
+    "id": "92",
+    "name": "Nova Gonzales",
+    "company": "TechBridge Solutions Pro Group",
+    "email": "nova.gonzales@techbridgesolutionsprogroup.com",
+    "source": "LinkedIn",
+    "score": 89,
+    "status": "contacted"
+  },
+  {
+    "id": "93",
+    "name": "Atlas Bryant",
+    "company": "Future Systems Pro Solutions Group",
+    "email": "atlas.bryant@futuresystemsprosolutionsgroup.com",
+    "source": "Referral",
+    "score": 82,
+    "status": "qualified"
+  },
+  {
+    "id": "94",
+    "name": "Paisley Alexander",
+    "company": "Smart Solutions Pro Solutions",
+    "email": "paisley.alexander@smartsolutionsprosolutions.com",
+    "source": "Website",
+    "score": 85,
+    "status": "new"
+  },
+  {
+    "id": "95",
+    "name": "Remington Russell",
+    "company": "CloudTech Group Pro Solutions",
+    "email": "remington.russell@cloudtechgroupprosolutions.com",
+    "source": "Trade Show",
+    "score": 91,
+    "status": "contacted"
+  },
+  {
+    "id": "96",
+    "name": "Kennedy Griffin",
+    "company": "NextWave Pro Solutions Group",
+    "email": "kennedy.griffin@nextwaveprosolutionsgroup.com",
+    "source": "Website",
+    "score": 76,
+    "status": "qualified"
+  },
+  {
+    "id": "97",
+    "name": "Jasper Diaz",
+    "company": "DataFlow Pro Solutions Group",
+    "email": "jasper.diaz@dataflowprosolutionsgroup.com",
+    "source": "LinkedIn",
+    "score": 88,
+    "status": "new"
+  },
+  {
+    "id": "98",
+    "name": "Nova Hayes",
+    "company": "TechVision Solutions Pro Group",
+    "email": "nova.hayes@techvisionsolutionsprogroup.com",
+    "source": "Referral",
+    "score": 84,
+    "status": "contacted"
+  },
+  {
+    "id": "99",
+    "name": "Atlas Myers",
+    "company": "Innovation Hub Pro Solutions Group",
+    "email": "atlas.myers@innovationhubprosolutionsgroup.com",
+    "source": "Website",
+    "score": 69,
+    "status": "disqualified"
+  },
+  {
+    "id": "100",
+    "name": "Paisley Ford",
+    "company": "Digital Solutions Pro Solutions Group",
+    "email": "paisley.ford@digitalsolutionsprosolutionsgroup.com",
+    "source": "Trade Show",
+    "score": 95,
+    "status": "qualified"
   }
 ]
