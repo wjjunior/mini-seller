@@ -12,10 +12,24 @@ vi.mock("../../lib/useLeadsFilter", () => ({
   useLeadsFilter: vi.fn(),
 }));
 
+vi.mock("@/shared/hooks/useContainerHeight", () => ({
+  useContainerHeight: vi.fn(),
+}));
+
+vi.mock("@/shared/hooks/useIsMobile", () => ({
+  default: vi.fn(),
+}));
+
 const mockUseLeads = vi.mocked(await import("../../lib/useLeads")).useLeads;
 const mockUseLeadsFilter = vi.mocked(
   await import("../../lib/useLeadsFilter")
 ).useLeadsFilter;
+const mockUseContainerHeight = vi.mocked(
+  await import("@/shared/hooks/useContainerHeight")
+).useContainerHeight;
+const mockUseIsMobile = vi.mocked(
+  await import("@/shared/hooks/useIsMobile")
+).default;
 
 const createWrapper = () => {
   const queryClient = new QueryClient({
@@ -57,6 +71,13 @@ describe("LeadsList", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     localStorage.clear();
+
+    mockUseContainerHeight.mockReturnValue({
+      containerRef: { current: null },
+      height: 400,
+    });
+
+    mockUseIsMobile.mockReturnValue(false);
   });
 
   it("should render loading state", () => {

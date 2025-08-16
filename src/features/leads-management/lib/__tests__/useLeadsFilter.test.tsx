@@ -187,4 +187,159 @@ describe("useLeadsFilter", () => {
 
     expect(result.current.filteredAndSortedLeads).toHaveLength(4);
   });
+
+  it("should clear filters properly", () => {
+    const { result } = renderHook(() => useLeadsFilter(mockLeads));
+
+    act(() => {
+      result.current.setSearchTerm("test search");
+    });
+
+    act(() => {
+      result.current.setStatusFilter("qualified");
+    });
+
+    expect(result.current.searchTerm).toBe("test search");
+    expect(result.current.statusFilter).toBe("qualified");
+
+    act(() => {
+      result.current.setSearchTerm("");
+    });
+
+    act(() => {
+      result.current.setStatusFilter("all");
+    });
+
+    expect(result.current.searchTerm).toBe("");
+    expect(result.current.statusFilter).toBe("all");
+    expect(result.current.filteredAndSortedLeads).toHaveLength(4);
+  });
+
+  it("should persist cleared search term in localStorage", () => {
+    const { result } = renderHook(() => useLeadsFilter(mockLeads));
+
+    act(() => {
+      result.current.setSearchTerm("test search");
+    });
+
+    expect(result.current.searchTerm).toBe("test search");
+
+    act(() => {
+      result.current.setSearchTerm("");
+    });
+
+    expect(result.current.searchTerm).toBe("");
+
+    const storedData = localStorage.getItem("leads-filter-state");
+    expect(storedData).toBeDefined();
+
+    const parsedData = JSON.parse(storedData!);
+    expect(parsedData.searchTerm).toBe("");
+  });
+
+  it("should properly restore cleared state from localStorage", () => {
+    localStorage.clear();
+
+    const { result, unmount } = renderHook(() => useLeadsFilter(mockLeads));
+
+    act(() => {
+      result.current.setSearchTerm("test search");
+    });
+
+    act(() => {
+      result.current.setStatusFilter("qualified");
+    });
+
+    expect(result.current.searchTerm).toBe("test search");
+    expect(result.current.statusFilter).toBe("qualified");
+
+    act(() => {
+      result.current.setSearchTerm("");
+    });
+
+    act(() => {
+      result.current.setStatusFilter("all");
+    });
+
+    expect(result.current.searchTerm).toBe("");
+    expect(result.current.statusFilter).toBe("all");
+
+    unmount();
+
+    const { result: newResult } = renderHook(() => useLeadsFilter(mockLeads));
+
+    expect(newResult.current.searchTerm).toBe("");
+    expect(newResult.current.statusFilter).toBe("all");
+  });
+
+  it("should clear searchTerm when setSearchTerm is called with empty string", () => {
+    localStorage.clear();
+
+    const { result } = renderHook(() => useLeadsFilter(mockLeads));
+
+    act(() => {
+      result.current.setSearchTerm("test search");
+    });
+
+    expect(result.current.searchTerm).toBe("test search");
+
+    act(() => {
+      result.current.setSearchTerm("");
+    });
+
+    expect(result.current.searchTerm).toBe("");
+    expect(result.current.filteredAndSortedLeads).toHaveLength(4);
+  });
+
+  it("should handle clearing searchTerm when state is persisted", () => {
+    localStorage.clear();
+
+    const { result, unmount } = renderHook(() => useLeadsFilter(mockLeads));
+
+    act(() => {
+      result.current.setSearchTerm("test search");
+    });
+
+    expect(result.current.searchTerm).toBe("test search");
+
+    unmount();
+
+    const { result: newResult } = renderHook(() => useLeadsFilter(mockLeads));
+
+    expect(newResult.current.searchTerm).toBe("test search");
+
+    act(() => {
+      newResult.current.setSearchTerm("");
+    });
+
+    expect(newResult.current.searchTerm).toBe("");
+    expect(newResult.current.filteredAndSortedLeads).toHaveLength(4);
+  });
+
+  it("should clear filters when localStorage has existing data", () => {
+    localStorage.clear();
+
+    const existingState = {
+      searchTerm: "existing search",
+      statusFilter: "qualified",
+    };
+    localStorage.setItem("leads-filter-state", JSON.stringify(existingState));
+
+    const { result } = renderHook(() => useLeadsFilter(mockLeads));
+
+    expect(result.current.searchTerm).toBe("existing search");
+    expect(result.current.statusFilter).toBe("qualified");
+
+    act(() => {
+      result.current.setSearchTerm("");
+    });
+
+    act(() => {
+      result.current.setStatusFilter("all");
+    });
+
+    expect(result.current.searchTerm).toBe("");
+    expect(result.current.statusFilter).toBe("all");
+    expect(result.current.filteredAndSortedLeads).toHaveLength(4);
+  });
 });

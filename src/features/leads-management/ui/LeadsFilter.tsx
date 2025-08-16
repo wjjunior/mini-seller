@@ -76,7 +76,7 @@ const LeadsFilter: React.FC<LeadsFilterProps> = ({
           Showing {filteredCount} of {totalCount} leads
         </div>
 
-        {filteredCount !== totalCount && (
+        {(searchTerm || statusFilter !== "all") && (
           <button
             onClick={() => {
               onSearchChange("");

@@ -1,6 +1,11 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi, beforeEach } from "vitest";
 import VirtualizedTable from "../VirtualizedTable";
+import useLocalStorage from "@/shared/hooks/useLocalStorage";
+
+vi.mock("@/shared/hooks/useLocalStorage", () => ({
+  default: vi.fn(),
+}));
 
 const mockData = [
   {
@@ -51,6 +56,19 @@ const mockColumns = [
 ];
 
 describe("VirtualizedTable", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    localStorage.clear();
+
+    const mockUseLocalStorage = vi.mocked(useLocalStorage);
+
+    mockUseLocalStorage.mockReturnValue([
+      { key: null, direction: null },
+      vi.fn(),
+      vi.fn(),
+    ]);
+  });
+
   it("renders table headers correctly", () => {
     render(
       <VirtualizedTable

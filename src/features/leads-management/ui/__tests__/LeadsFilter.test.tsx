@@ -121,4 +121,93 @@ describe("LeadsFilter", () => {
 
     expect(onSearchChange).toHaveBeenCalledWith("test@company.com");
   });
+
+  it("should call onSearchChange and onStatusFilterChange when Clear filters is clicked", () => {
+    const onSearchChange = vi.fn();
+    const onStatusFilterChange = vi.fn();
+    render(
+      <LeadsFilter
+        {...defaultProps}
+        searchTerm="test search"
+        statusFilter="new"
+        onSearchChange={onSearchChange}
+        onStatusFilterChange={onStatusFilterChange}
+        filteredCount={5}
+        totalCount={15}
+      />
+    );
+
+    const clearFiltersButton = screen.getByText("Clear filters");
+    fireEvent.click(clearFiltersButton);
+
+    expect(onSearchChange).toHaveBeenCalledWith("");
+    expect(onStatusFilterChange).toHaveBeenCalledWith("all");
+  });
+
+  it("should not show Clear filters button when no filters are active", () => {
+    render(
+      <LeadsFilter
+        {...defaultProps}
+        searchTerm=""
+        statusFilter="all"
+        filteredCount={10}
+        totalCount={10}
+      />
+    );
+
+    expect(screen.queryByText("Clear filters")).not.toBeInTheDocument();
+  });
+
+  it("should show Clear filters button when search term is active", () => {
+    render(
+      <LeadsFilter
+        {...defaultProps}
+        searchTerm="test"
+        statusFilter="all"
+        filteredCount={10}
+        totalCount={10}
+      />
+    );
+
+    expect(screen.getByText("Clear filters")).toBeInTheDocument();
+  });
+
+  it("should show Clear filters button when status filter is active", () => {
+    render(
+      <LeadsFilter
+        {...defaultProps}
+        searchTerm=""
+        statusFilter="new"
+        filteredCount={10}
+        totalCount={10}
+      />
+    );
+
+    expect(screen.getByText("Clear filters")).toBeInTheDocument();
+  });
+
+  it("should clear search input value when Clear filters is clicked", () => {
+    const onSearchChange = vi.fn();
+    const onStatusFilterChange = vi.fn();
+    render(
+      <LeadsFilter
+        {...defaultProps}
+        searchTerm="test search"
+        statusFilter="new"
+        onSearchChange={onSearchChange}
+        onStatusFilterChange={onStatusFilterChange}
+        filteredCount={5}
+        totalCount={15}
+      />
+    );
+
+    const searchInput = screen.getByLabelText(/search/i);
+    expect(searchInput).toHaveValue("test search");
+
+    const clearFiltersButton = screen.getByText("Clear filters");
+    fireEvent.click(clearFiltersButton);
+
+    expect(onSearchChange).toHaveBeenCalledWith("");
+    expect(onStatusFilterChange).toHaveBeenCalledWith("all");
+  });
 });
