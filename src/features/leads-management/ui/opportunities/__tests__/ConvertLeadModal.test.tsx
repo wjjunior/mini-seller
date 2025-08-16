@@ -164,4 +164,84 @@ describe("ConvertLeadModal", () => {
       expect(screen.getByText("Account name is required")).toBeInTheDocument();
     });
   });
+
+  it("should show error message when lead is already converted", () => {
+    render(
+      <ConvertLeadModal
+        isOpen={true}
+        onClose={mockOnClose}
+        onSubmit={mockOnSubmit}
+        lead={mockLead}
+        isLeadAlreadyConverted={true}
+      />
+    );
+
+    expect(screen.getByText("Lead Already Converted")).toBeInTheDocument();
+    expect(
+      screen.getByText(
+        "This lead has already been converted to an opportunity and cannot be converted again."
+      )
+    ).toBeInTheDocument();
+  });
+
+  it("should disable form fields when lead is already converted", () => {
+    render(
+      <ConvertLeadModal
+        isOpen={true}
+        onClose={mockOnClose}
+        onSubmit={mockOnSubmit}
+        lead={mockLead}
+        isLeadAlreadyConverted={true}
+      />
+    );
+
+    const stageSelect = screen.getByDisplayValue("Prospecting");
+    const amountInput = screen.getByPlaceholderText("Enter amount in dollars");
+    const submitButton = screen.getByText("Convert to Opportunity");
+
+    expect(stageSelect).toBeDisabled();
+    expect(amountInput).toBeDisabled();
+    expect(submitButton).toBeDisabled();
+  });
+
+  it("should not show error message when lead is not converted", () => {
+    render(
+      <ConvertLeadModal
+        isOpen={true}
+        onClose={mockOnClose}
+        onSubmit={mockOnSubmit}
+        lead={mockLead}
+        isLeadAlreadyConverted={false}
+      />
+    );
+
+    expect(
+      screen.queryByText("Lead Already Converted")
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(
+        "This lead has already been converted to an opportunity and cannot be converted again."
+      )
+    ).not.toBeInTheDocument();
+  });
+
+  it("should enable form fields when lead is not converted", () => {
+    render(
+      <ConvertLeadModal
+        isOpen={true}
+        onClose={mockOnClose}
+        onSubmit={mockOnSubmit}
+        lead={mockLead}
+        isLeadAlreadyConverted={false}
+      />
+    );
+
+    const stageSelect = screen.getByDisplayValue("Prospecting");
+    const amountInput = screen.getByPlaceholderText("Enter amount in dollars");
+    const submitButton = screen.getByText("Convert to Opportunity");
+
+    expect(stageSelect).not.toBeDisabled();
+    expect(amountInput).not.toBeDisabled();
+    expect(submitButton).not.toBeDisabled();
+  });
 });

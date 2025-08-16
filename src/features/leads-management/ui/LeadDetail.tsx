@@ -20,6 +20,7 @@ interface LeadDetailProps {
   onClose: () => void;
   onUpdate?: (leadId: string, data: LeadEditFormData) => Promise<void>;
   onConvertToOpportunity?: (data: CreateOpportunityData) => Promise<void>;
+  isLeadAlreadyConverted?: boolean;
 }
 
 const LeadDetail: React.FC<LeadDetailProps> = ({
@@ -28,6 +29,7 @@ const LeadDetail: React.FC<LeadDetailProps> = ({
   onClose,
   onUpdate,
   onConvertToOpportunity,
+  isLeadAlreadyConverted = false,
 }) => {
   const [editingField, setEditingField] = useState<"email" | "status" | null>(
     null
@@ -282,6 +284,7 @@ const LeadDetail: React.FC<LeadDetailProps> = ({
         onClose={() => setIsConvertModalOpen(false)}
         onSubmit={onConvertToOpportunity || (() => Promise.resolve())}
         lead={lead}
+        isLeadAlreadyConverted={isLeadAlreadyConverted}
       />
     </SlideOver>
   );

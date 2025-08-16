@@ -64,6 +64,11 @@ const LeadsPage: React.FC = () => {
     }
   };
 
+  const isLeadAlreadyConverted = (leadId: string): boolean => {
+    const existingOpportunities = opportunitiesHook.getOpportunitiesByLeadId(leadId);
+    return existingOpportunities.length > 0;
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
@@ -102,16 +107,17 @@ const LeadsPage: React.FC = () => {
             activeTab={activeTab}
             onTabChange={setActiveTab}
           />
+
+          <LeadDetail
+            lead={selectedLead}
+            isOpen={isSlideOverOpen}
+            onClose={handleCloseSlideOver}
+            onUpdate={handleUpdateLead}
+            onConvertToOpportunity={handleConvertToOpportunity}
+            isLeadAlreadyConverted={selectedLead ? isLeadAlreadyConverted(selectedLead.id) : false}
+          />
         </div>
       </div>
-
-      <LeadDetail
-        lead={selectedLead}
-        isOpen={isSlideOverOpen}
-        onClose={handleCloseSlideOver}
-        onUpdate={handleUpdateLead}
-        onConvertToOpportunity={handleConvertToOpportunity}
-      />
     </div>
   );
 };

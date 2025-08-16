@@ -41,6 +41,7 @@ interface ConvertLeadModalProps {
   onSubmit: (data: CreateOpportunityData) => Promise<void>;
   lead: Lead | null;
   isLoading?: boolean;
+  isLeadAlreadyConverted?: boolean;
 }
 
 const ConvertLeadModal: React.FC<ConvertLeadModalProps> = ({
@@ -49,6 +50,7 @@ const ConvertLeadModal: React.FC<ConvertLeadModalProps> = ({
   onSubmit,
   lead,
   isLoading = false,
+  isLeadAlreadyConverted = false,
 }) => {
   const {
     register,
@@ -115,6 +117,37 @@ const ConvertLeadModal: React.FC<ConvertLeadModalProps> = ({
               </button>
             </div>
 
+            {isLeadAlreadyConverted && (
+              <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+                <div className="flex">
+                  <div className="flex-shrink-0">
+                    <svg
+                      className="h-5 w-5 text-red-400"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </div>
+                  <div className="ml-3">
+                    <h3 className="text-sm font-medium text-red-800">
+                      Lead Already Converted
+                    </h3>
+                    <div className="mt-2 text-sm text-red-700">
+                      <p>
+                        This lead has already been converted to an opportunity
+                        and cannot be converted again.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             <form
               onSubmit={handleSubmit(handleFormSubmit)}
               className="space-y-4"
@@ -176,7 +209,7 @@ const ConvertLeadModal: React.FC<ConvertLeadModalProps> = ({
                   id="stage"
                   {...register("stage")}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg text-base text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  disabled={isLoading}
+                  disabled={isLoading || isLeadAlreadyConverted}
                 >
                   {STAGE_OPTIONS.map((option) => (
                     <option key={option} value={option}>
@@ -205,7 +238,7 @@ const ConvertLeadModal: React.FC<ConvertLeadModalProps> = ({
                     {...register("amount")}
                     className="w-full px-3 py-2 pr-12 border border-gray-300 rounded-lg text-base text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                     placeholder="Enter amount in dollars"
-                    disabled={isLoading}
+                    disabled={isLoading || isLeadAlreadyConverted}
                   />
                   <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                     <span className="text-gray-500 text-sm">USD</span>
@@ -229,7 +262,7 @@ const ConvertLeadModal: React.FC<ConvertLeadModalProps> = ({
                 </button>
                 <button
                   type="submit"
-                  disabled={isLoading}
+                  disabled={isLoading || isLeadAlreadyConverted}
                   className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors disabled:opacity-50"
                 >
                   {isLoading ? "Converting..." : "Convert to Opportunity"}
