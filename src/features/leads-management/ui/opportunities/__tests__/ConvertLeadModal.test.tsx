@@ -1,21 +1,20 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import ConvertLeadModal from "../ConvertLeadModal";
-import type { Lead } from "../../../../../entities/lead";
+import {
+  createMockLead,
+  createMockEventHandlers,
+} from "../../../../../test/helpers.tsx";
 
-const mockLead: Lead = {
-  id: "1",
-  name: "John Doe",
+const mockLead = createMockLead({
   email: "john@example.com",
   company: "Acme Corp",
-  status: "new",
-  score: 85,
   source: "website",
-};
+});
 
 describe("ConvertLeadModal", () => {
-  const mockOnClose = vi.fn();
-  const mockOnSubmit = vi.fn();
+  const { onClose: mockOnClose, onSubmit: mockOnSubmit } =
+    createMockEventHandlers();
 
   beforeEach(() => {
     vi.clearAllMocks();

@@ -1,46 +1,22 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import LeadsGrid from "../LeadsGrid";
-import type { Lead } from "@/entities/lead";
 import useIsMobile from "@/shared/hooks/useIsMobile";
+import {
+  createMockLeads,
+  createMockEventHandlers,
+} from "../../../../test/helpers.tsx";
 
-// Mock the useIsMobile hook
 vi.mock("@/shared/hooks/useIsMobile", () => ({
   default: vi.fn(),
 }));
 
-const mockLeads: Lead[] = [
-  {
-    id: "1",
-    name: "John Doe",
-    company: "Tech Corp",
-    email: "john@techcorp.com",
-    source: "Website",
-    score: 85,
-    status: "qualified",
-  },
-  {
-    id: "2",
-    name: "Jane Smith",
-    company: "Design Inc",
-    email: "jane@designinc.com",
-    source: "LinkedIn",
-    score: 72,
-    status: "contacted",
-  },
-  {
-    id: "3",
-    name: "Bob Johnson",
-    company: "Marketing Pro",
-    email: "bob@marketingpro.com",
-    source: "Referral",
-    score: 95,
-    status: "new",
-  },
-];
+const mockLeads = createMockLeads(3, {
+  status: "qualified",
+});
 
 describe("LeadsGrid", () => {
-  const mockOnLeadSelect = vi.fn();
+  const { onLeadSelect: mockOnLeadSelect } = createMockEventHandlers();
   const mockUseIsMobile = vi.mocked(useIsMobile);
 
   beforeEach(() => {
@@ -57,9 +33,9 @@ describe("LeadsGrid", () => {
       />
     );
 
-    expect(screen.getByText("John Doe")).toBeInTheDocument();
-    expect(screen.getByText("Jane Smith")).toBeInTheDocument();
-    expect(screen.getByText("Bob Johnson")).toBeInTheDocument();
+    expect(screen.getByText("Lead 1")).toBeInTheDocument();
+    expect(screen.getByText("Lead 2")).toBeInTheDocument();
+    expect(screen.getByText("Lead 3")).toBeInTheDocument();
   });
 
   it("shows pagination info when there are multiple pages", () => {
@@ -238,7 +214,7 @@ describe("LeadsGrid", () => {
       />
     );
 
-    const firstLeadCard = screen.getByText("John Doe").closest("div");
+    const firstLeadCard = screen.getByText("Lead 1").closest("div");
     fireEvent.click(firstLeadCard!);
 
     expect(mockOnLeadSelect).toHaveBeenCalledWith(mockLeads[0]);

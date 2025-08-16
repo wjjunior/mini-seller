@@ -1,8 +1,16 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import LeadsList from "../LeadsList";
-import type { Lead } from "@/entities/lead";
+import { useContainerHeight } from "@/shared/hooks/useContainerHeight";
+import useIsMobile from "@/shared/hooks/useIsMobile";
+import {
+  createWrapper,
+  createMockLeads,
+  createMockUseLeadsReturn,
+  createMockUseLeadsFilterReturn,
+  createMockEventHandlers,
+  clearAllMocks,
+} from "../../../../test/helpers.tsx";
 
 vi.mock("../../lib/useLeads", () => ({
   useLeads: vi.fn(),
@@ -24,77 +32,37 @@ const mockUseLeads = vi.mocked(await import("../../lib/useLeads")).useLeads;
 const mockUseLeadsFilter = vi.mocked(
   await import("../../lib/useLeadsFilter")
 ).useLeadsFilter;
-const mockUseContainerHeight = vi.mocked(
-  await import("@/shared/hooks/useContainerHeight")
-).useContainerHeight;
-const mockUseIsMobile = vi.mocked(
-  await import("@/shared/hooks/useIsMobile")
-).default;
+const mockUseContainerHeight = vi.mocked(useContainerHeight);
+const mockUseIsMobile = vi.mocked(useIsMobile);
 
-const createWrapper = () => {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: false,
-      },
-    },
-  });
-  return ({ children }: { children: React.ReactNode }) => (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-  );
-};
-
-const mockLeads: Lead[] = [
-  {
-    id: "1",
-    name: "John Doe",
-    company: "Tech Corp",
-    email: "john@techcorp.com",
-    source: "Website",
-    status: "new" as const,
-    score: 85,
-  },
-  {
-    id: "2",
-    name: "Jane Smith",
-    company: "Design Inc",
-    email: "jane@designinc.com",
-    source: "Referral",
-    status: "contacted" as const,
-    score: 92,
-  },
-];
+const mockLeads = createMockLeads();
 
 describe("LeadsList", () => {
-  const mockOnLeadSelect = vi.fn();
+  const { onLeadSelect: mockOnLeadSelect } = createMockEventHandlers();
 
   beforeEach(() => {
-    vi.clearAllMocks();
-    localStorage.clear();
+    clearAllMocks();
 
     mockUseContainerHeight.mockReturnValue({
       containerRef: { current: null },
       height: 400,
     });
-
     mockUseIsMobile.mockReturnValue(false);
   });
 
   it("should render loading state", () => {
-    mockUseLeads.mockReturnValue({
-      data: undefined,
-      isLoading: true,
-      error: null,
-      refetch: vi.fn(),
-    } as unknown as ReturnType<typeof mockUseLeads>);
+    mockUseLeads.mockReturnValue(
+      createMockUseLeadsReturn({
+        data: undefined,
+        isLoading: true,
+      }) as unknown as ReturnType<typeof mockUseLeads>
+    );
 
-    mockUseLeadsFilter.mockReturnValue({
-      searchTerm: "",
-      setSearchTerm: vi.fn(),
-      statusFilter: "all",
-      setStatusFilter: vi.fn(),
-      filteredAndSortedLeads: [],
-    });
+    mockUseLeadsFilter.mockReturnValue(
+      createMockUseLeadsFilterReturn({
+        filteredAndSortedLeads: [],
+      })
+    );
 
     render(<LeadsList onLeadSelect={mockOnLeadSelect} />, {
       wrapper: createWrapper(),
@@ -108,20 +76,20 @@ describe("LeadsList", () => {
   it("should render error state", () => {
     const mockRefetch = vi.fn();
 
-    mockUseLeads.mockReturnValue({
-      data: undefined,
-      isLoading: false,
-      error: new Error("Failed to fetch"),
-      refetch: mockRefetch,
-    } as unknown as ReturnType<typeof mockUseLeads>);
+    mockUseLeads.mockReturnValue(
+      createMockUseLeadsReturn({
+        data: undefined,
+        isLoading: false,
+        error: new Error("Failed to fetch"),
+        refetch: mockRefetch,
+      }) as unknown as ReturnType<typeof mockUseLeads>
+    );
 
-    mockUseLeadsFilter.mockReturnValue({
-      searchTerm: "",
-      setSearchTerm: vi.fn(),
-      statusFilter: "all",
-      setStatusFilter: vi.fn(),
-      filteredAndSortedLeads: [],
-    });
+    mockUseLeadsFilter.mockReturnValue(
+      createMockUseLeadsFilterReturn({
+        filteredAndSortedLeads: [],
+      })
+    );
 
     render(<LeadsList onLeadSelect={mockOnLeadSelect} />, {
       wrapper: createWrapper(),
@@ -137,70 +105,62 @@ describe("LeadsList", () => {
   });
 
   it("should render leads table when data is loaded", () => {
-    mockUseLeads.mockReturnValue({
-      data: mockLeads,
-      isLoading: false,
-      error: null,
-      refetch: vi.fn(),
-    } as unknown as ReturnType<typeof mockUseLeads>);
+    mockUseLeads.mockReturnValue(
+      createMockUseLeadsReturn({
+        data: mockLeads,
+      }) as unknown as ReturnType<typeof mockUseLeads>
+    );
 
-    mockUseLeadsFilter.mockReturnValue({
-      searchTerm: "",
-      setSearchTerm: vi.fn(),
-      statusFilter: "all",
-      setStatusFilter: vi.fn(),
-      filteredAndSortedLeads: mockLeads,
-    });
+    mockUseLeadsFilter.mockReturnValue(
+      createMockUseLeadsFilterReturn({
+        filteredAndSortedLeads: mockLeads,
+      })
+    );
 
     render(<LeadsList onLeadSelect={mockOnLeadSelect} />, {
       wrapper: createWrapper(),
     });
 
-    expect(screen.getByText("John Doe")).toBeInTheDocument();
-    expect(screen.getByText("Jane Smith")).toBeInTheDocument();
-    expect(screen.getByText("Tech Corp")).toBeInTheDocument();
-    expect(screen.getByText("Design Inc")).toBeInTheDocument();
+    expect(screen.getByText("Lead 1")).toBeInTheDocument();
+    expect(screen.getByText("Lead 2")).toBeInTheDocument();
+    expect(screen.getByText("Company 1")).toBeInTheDocument();
+    expect(screen.getByText("Company 2")).toBeInTheDocument();
   });
 
   it("should call onLeadSelect when a row is clicked", () => {
-    mockUseLeads.mockReturnValue({
-      data: mockLeads,
-      isLoading: false,
-      error: null,
-      refetch: vi.fn(),
-    } as unknown as ReturnType<typeof mockUseLeads>);
+    mockUseLeads.mockReturnValue(
+      createMockUseLeadsReturn({
+        data: mockLeads,
+      }) as unknown as ReturnType<typeof mockUseLeads>
+    );
 
-    mockUseLeadsFilter.mockReturnValue({
-      searchTerm: "",
-      setSearchTerm: vi.fn(),
-      statusFilter: "all",
-      setStatusFilter: vi.fn(),
-      filteredAndSortedLeads: mockLeads,
-    });
+    mockUseLeadsFilter.mockReturnValue(
+      createMockUseLeadsFilterReturn({
+        filteredAndSortedLeads: mockLeads,
+      })
+    );
 
     render(<LeadsList onLeadSelect={mockOnLeadSelect} />, {
       wrapper: createWrapper(),
     });
 
-    fireEvent.click(screen.getByText("John Doe"));
+    fireEvent.click(screen.getByText("Lead 1"));
     expect(mockOnLeadSelect).toHaveBeenCalledWith(mockLeads[0]);
   });
 
   it("should render empty state when no leads match filter", () => {
-    mockUseLeads.mockReturnValue({
-      data: mockLeads,
-      isLoading: false,
-      error: null,
-      refetch: vi.fn(),
-    } as unknown as ReturnType<typeof mockUseLeads>);
+    mockUseLeads.mockReturnValue(
+      createMockUseLeadsReturn({
+        data: mockLeads,
+      }) as unknown as ReturnType<typeof mockUseLeads>
+    );
 
-    mockUseLeadsFilter.mockReturnValue({
-      searchTerm: "nonexistent",
-      setSearchTerm: vi.fn(),
-      statusFilter: "all",
-      setStatusFilter: vi.fn(),
-      filteredAndSortedLeads: [],
-    });
+    mockUseLeadsFilter.mockReturnValue(
+      createMockUseLeadsFilterReturn({
+        searchTerm: "nonexistent",
+        filteredAndSortedLeads: [],
+      })
+    );
 
     render(<LeadsList onLeadSelect={mockOnLeadSelect} />, {
       wrapper: createWrapper(),
@@ -212,20 +172,17 @@ describe("LeadsList", () => {
   });
 
   it("should render empty state when no leads exist", () => {
-    mockUseLeads.mockReturnValue({
-      data: [],
-      isLoading: false,
-      error: null,
-      refetch: vi.fn(),
-    } as unknown as ReturnType<typeof mockUseLeads>);
+    mockUseLeads.mockReturnValue(
+      createMockUseLeadsReturn({
+        data: [],
+      }) as unknown as ReturnType<typeof mockUseLeads>
+    );
 
-    mockUseLeadsFilter.mockReturnValue({
-      searchTerm: "",
-      setSearchTerm: vi.fn(),
-      statusFilter: "all",
-      setStatusFilter: vi.fn(),
-      filteredAndSortedLeads: [],
-    });
+    mockUseLeadsFilter.mockReturnValue(
+      createMockUseLeadsFilterReturn({
+        filteredAndSortedLeads: [],
+      })
+    );
 
     render(<LeadsList onLeadSelect={mockOnLeadSelect} />, {
       wrapper: createWrapper(),

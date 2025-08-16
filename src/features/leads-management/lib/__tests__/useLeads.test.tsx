@@ -1,8 +1,13 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useLeads } from "../useLeads";
 import { fetchLeads } from "@/shared/api";
+import {
+  createWrapper,
+  createMockLeads,
+  createMockError,
+  clearAllMocks,
+} from "../../../../test/helpers.tsx";
 
 vi.mock("@/shared/api", () => ({
   fetchLeads: vi.fn(),
@@ -10,45 +15,15 @@ vi.mock("@/shared/api", () => ({
 
 const mockFetchLeads = vi.mocked(fetchLeads);
 
-const createWrapper = () => {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: false,
-      },
-    },
-  });
-  return ({ children }: { children: React.ReactNode }) => (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
-  );
-};
-
 describe("useLeads", () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    clearAllMocks();
   });
 
   it("should fetch leads successfully", async () => {
-    const mockLeads = [
-      {
-        id: "1",
-        name: "John Doe",
-        company: "Tech Corp",
-        email: "john@techcorp.com",
-        source: "Website",
-        status: "new" as const,
-        score: 85,
-      },
-      {
-        id: "2",
-        name: "Jane Smith",
-        company: "Design Inc",
-        email: "jane@designinc.com",
-        source: "Referral",
-        status: "contacted" as const,
-        score: 92,
-      },
-    ];
+    const mockLeads = createMockLeads(2, {
+      status: "new" as const,
+    });
 
     mockFetchLeads.mockResolvedValue(mockLeads);
 
@@ -76,7 +51,7 @@ describe("useLeads", () => {
   });
 
   it("should handle error state", async () => {
-    const mockError = new Error("Failed to fetch leads");
+    const mockError = createMockError("Failed to fetch leads");
     mockFetchLeads.mockRejectedValue(mockError);
 
     const { result } = renderHook(() => useLeads(), {

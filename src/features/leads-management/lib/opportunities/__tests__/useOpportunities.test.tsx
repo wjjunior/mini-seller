@@ -1,19 +1,13 @@
 import { renderHook, act } from "@testing-library/react";
-import type { CreateOpportunityData } from "../../../types";
 import useOpportunities from "../useOpportunities";
 import { describe, it, expect } from "vitest";
+import { createMockCreateOpportunityData } from "../../../../../test/helpers.tsx";
 
 describe("useOpportunities", () => {
   it("should create a new opportunity", async () => {
     const { result } = renderHook(() => useOpportunities());
 
-    const opportunityData: CreateOpportunityData = {
-      name: "Test Opportunity",
-      stage: "Prospecting",
-      amount: 1000,
-      accountName: "Test Account",
-      leadId: "lead_123",
-    };
+    const opportunityData = createMockCreateOpportunityData();
 
     await act(async () => {
       const newOpportunity = await result.current.createOpportunity(
@@ -45,13 +39,9 @@ describe("useOpportunities", () => {
   it("should update an opportunity", async () => {
     const { result } = renderHook(() => useOpportunities());
 
-    const opportunityData: CreateOpportunityData = {
+    const opportunityData = createMockCreateOpportunityData({
       name: "Original Name",
-      stage: "Prospecting",
-      amount: 1000,
-      accountName: "Test Account",
-      leadId: "lead_123",
-    };
+    });
 
     let opportunityId = "";
 
@@ -80,13 +70,7 @@ describe("useOpportunities", () => {
   it("should delete an opportunity", async () => {
     const { result } = renderHook(() => useOpportunities());
 
-    const opportunityData: CreateOpportunityData = {
-      name: "Test Opportunity",
-      stage: "Prospecting",
-      amount: 1000,
-      accountName: "Test Account",
-      leadId: "lead_123",
-    };
+    const opportunityData = createMockCreateOpportunityData();
 
     let opportunityId: string;
 
@@ -109,13 +93,7 @@ describe("useOpportunities", () => {
   it("should get opportunity by id", async () => {
     const { result } = renderHook(() => useOpportunities());
 
-    const opportunityData: CreateOpportunityData = {
-      name: "Test Opportunity",
-      stage: "Prospecting",
-      amount: 1000,
-      accountName: "Test Account",
-      leadId: "lead_123",
-    };
+    const opportunityData = createMockCreateOpportunityData();
 
     let opportunityId = "";
 
@@ -138,29 +116,28 @@ describe("useOpportunities", () => {
   it("should get opportunities by lead id", async () => {
     const { result } = renderHook(() => useOpportunities());
 
-    const opportunityData1: CreateOpportunityData = {
+    const opportunityData1 = createMockCreateOpportunityData({
       name: "Opportunity 1",
       stage: "Prospecting",
-      amount: 1000,
       accountName: "Test Account 1",
       leadId: "lead_123",
-    };
+    });
 
-    const opportunityData2: CreateOpportunityData = {
+    const opportunityData2 = createMockCreateOpportunityData({
       name: "Opportunity 2",
       stage: "Qualification",
       amount: 2000,
       accountName: "Test Account 2",
       leadId: "lead_123",
-    };
+    });
 
-    const opportunityData3: CreateOpportunityData = {
+    const opportunityData3 = createMockCreateOpportunityData({
       name: "Opportunity 3",
       stage: "Proposal",
       amount: 3000,
       accountName: "Test Account 3",
       leadId: "lead_456",
-    };
+    });
 
     await act(async () => {
       await result.current.createOpportunity(opportunityData1);

@@ -1,20 +1,17 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it } from "vitest";
 import LeadCard from "../LeadCard";
-import type { Lead } from "@/entities/lead";
+import {
+  createMockLead,
+  createMockEventHandlers,
+} from "../../../../test/helpers.tsx";
 
-const mockLead: Lead = {
-  id: "1",
-  name: "John Doe",
-  company: "Tech Corp",
-  email: "john@techcorp.com",
-  source: "Website",
-  score: 85,
+const mockLead = createMockLead({
   status: "qualified",
-};
+});
 
 describe("LeadCard", () => {
-  const mockOnClick = vi.fn();
+  const { onClick: mockOnClick } = createMockEventHandlers();
 
   beforeEach(() => {
     mockOnClick.mockClear();
@@ -55,7 +52,7 @@ describe("LeadCard", () => {
   });
 
   it("handles different status values", () => {
-    const newLead: Lead = { ...mockLead, status: "new" };
+    const newLead = createMockLead({ status: "new" });
     render(<LeadCard lead={newLead} onClick={mockOnClick} />);
 
     const statusElement = screen.getByText("new");
@@ -63,7 +60,7 @@ describe("LeadCard", () => {
   });
 
   it("handles different score values", () => {
-    const lowScoreLead: Lead = { ...mockLead, score: 30 };
+    const lowScoreLead = createMockLead({ score: 30 });
     render(<LeadCard lead={lowScoreLead} onClick={mockOnClick} />);
 
     const scoreElement = screen.getByText("Score: 30");
