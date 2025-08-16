@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import { getStatusColor, getScoreColor } from "../helpers";
 
 describe("Helper utilities", () => {

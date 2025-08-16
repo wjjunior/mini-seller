@@ -1,6 +1,5 @@
-import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { SlideOver } from "../index";
 
 describe("SlideOver", () => {
@@ -62,7 +61,12 @@ describe("SlideOver", () => {
 
   it("renders with different max width sizes", () => {
     const { rerender } = render(
-      <SlideOver isOpen={true} onClose={mockOnClose} title="Test Title" maxWidth="sm">
+      <SlideOver
+        isOpen={true}
+        onClose={mockOnClose}
+        title="Test Title"
+        maxWidth="sm"
+      >
         <div>Test content</div>
       </SlideOver>
     );
@@ -70,7 +74,12 @@ describe("SlideOver", () => {
     expect(screen.getByText("Test Title")).toBeInTheDocument();
 
     rerender(
-      <SlideOver isOpen={true} onClose={mockOnClose} title="Test Title" maxWidth="lg">
+      <SlideOver
+        isOpen={true}
+        onClose={mockOnClose}
+        title="Test Title"
+        maxWidth="lg"
+      >
         <div>Test content</div>
       </SlideOver>
     );

@@ -1,7 +1,7 @@
 import { renderHook, act } from "@testing-library/react";
 import useOpportunities from "../useOpportunities";
 import { describe, it, expect } from "vitest";
-import { createMockCreateOpportunityData } from "../../../../../test/helpers.tsx";
+import { createMockCreateOpportunityData } from "src/test/helpers";
 
 describe("useOpportunities", () => {
   it("should create a new opportunity", async () => {

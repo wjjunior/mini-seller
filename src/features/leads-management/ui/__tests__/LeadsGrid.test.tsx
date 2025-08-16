@@ -2,10 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import LeadsGrid from "../LeadsGrid";
 import useIsMobile from "@/shared/hooks/useIsMobile";
-import {
-  createMockLeads,
-  createMockEventHandlers,
-} from "../../../../test/helpers.tsx";
+import { createMockEventHandlers, createMockLeads } from "src/test/helpers";
 
 vi.mock("@/shared/hooks/useIsMobile", () => ({
   default: vi.fn(),

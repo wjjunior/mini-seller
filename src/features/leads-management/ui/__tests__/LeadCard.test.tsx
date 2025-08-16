@@ -1,10 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { beforeEach, describe, expect, it } from "vitest";
 import LeadCard from "../LeadCard";
-import {
-  createMockLead,
-  createMockEventHandlers,
-} from "../../../../test/helpers.tsx";
+import { createMockLead, createMockEventHandlers } from "src/test/helpers";
 
 const mockLead = createMockLead({
   status: "qualified",

@@ -4,13 +4,13 @@ import LeadsList from "../LeadsList";
 import { useContainerHeight } from "@/shared/hooks/useContainerHeight";
 import useIsMobile from "@/shared/hooks/useIsMobile";
 import {
-  createWrapper,
   createMockLeads,
-  createMockUseLeadsReturn,
-  createMockUseLeadsFilterReturn,
   createMockEventHandlers,
   clearAllMocks,
-} from "../../../../test/helpers.tsx";
+  createMockUseLeadsReturn,
+  createMockUseLeadsFilterReturn,
+  createWrapper,
+} from "src/test/helpers";
 
 vi.mock("../../lib/useLeads", () => ({
   useLeads: vi.fn(),
