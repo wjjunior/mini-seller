@@ -5,6 +5,7 @@ import { useLeadsFilter } from "../lib/useLeadsFilter";
 import LeadsFilter from "./LeadsFilter";
 import SortableTable from "@/shared/ui/SortableTable";
 import type { SortableColumn } from "@/shared/ui/SortableTable";
+import { STORAGE_KEYS } from "@/shared/constants/storage";
 
 interface LeadsListProps {
   onLeadSelect: (lead: Lead) => void;
@@ -139,6 +140,7 @@ const LeadsList: React.FC<LeadsListProps> = ({ onLeadSelect }) => {
             : "No leads match your search criteria"
         }
         initialSortConfig={{ key: "score", direction: "desc" }}
+        storageKey={STORAGE_KEYS.LEADS_TABLE_SORT}
       />
     </div>
   );

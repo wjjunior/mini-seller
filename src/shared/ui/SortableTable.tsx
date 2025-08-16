@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useMemo } from "react";
 import {
   ArrowsUpDownIcon,
   ChevronUpIcon,
   ChevronDownIcon,
 } from "@heroicons/react/24/outline";
+import useLocalStorage from "@/shared/hooks/useLocalStorage";
 
 export type SortDirection = "asc" | "desc" | null;
 
@@ -25,6 +26,12 @@ interface SortableTableProps<T> {
     key: keyof T;
     direction: "asc" | "desc";
   };
+  storageKey?: string;
+}
+
+interface SortState<T> {
+  key: keyof T | null;
+  direction: SortDirection;
 }
 
 function SortableTable<T extends { id?: string | number }>({
@@ -34,14 +41,15 @@ function SortableTable<T extends { id?: string | number }>({
   emptyMessage = "No data found",
   className = "",
   initialSortConfig,
+  storageKey = "sortable-table-sort",
 }: SortableTableProps<T>) {
-  const [sortConfig, setSortConfig] = useState<{
-    key: keyof T | null;
-    direction: SortDirection;
-  }>(
-    initialSortConfig
-      ? { key: initialSortConfig.key, direction: initialSortConfig.direction }
-      : { key: null, direction: null }
+  const initialSortState: SortState<T> = initialSortConfig
+    ? { key: initialSortConfig.key, direction: initialSortConfig.direction }
+    : { key: null, direction: null };
+
+  const [sortConfig, setSortConfig] = useLocalStorage<SortState<T>>(
+    storageKey,
+    initialSortState
   );
 
   const handleSort = (key: keyof T) => {
@@ -58,7 +66,7 @@ function SortableTable<T extends { id?: string | number }>({
     setSortConfig({ key: direction ? key : null, direction });
   };
 
-  const sortedData = React.useMemo(() => {
+  const sortedData = useMemo(() => {
     if (!sortConfig.key || !sortConfig.direction) return data;
 
     return [...data].sort((a, b) => {
