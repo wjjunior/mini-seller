@@ -1,4 +1,6 @@
 import React from "react";
+import useIsMobile from "@/shared/hooks/useIsMobile";
+import OpportunitiesGrid from "./OpportunitiesGrid";
 import type { Opportunity } from "@/features/leads-management/types";
 
 interface OpportunitiesTableProps {
@@ -40,6 +42,8 @@ const OpportunitiesTable: React.FC<OpportunitiesTableProps> = ({
   isLoading = false,
   newlyCreatedOpportunityId = null,
 }) => {
+  const isMobile = useIsMobile();
+
   if (isLoading) {
     return (
       <div className="bg-white shadow rounded-lg">
@@ -72,6 +76,15 @@ const OpportunitiesTable: React.FC<OpportunitiesTableProps> = ({
           </div>
         </div>
       </div>
+    );
+  }
+
+  if (isMobile) {
+    return (
+      <OpportunitiesGrid
+        opportunities={opportunities}
+        newlyCreatedOpportunityId={newlyCreatedOpportunityId}
+      />
     );
   }
 
