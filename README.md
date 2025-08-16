@@ -1,69 +1,95 @@
-# React + TypeScript + Vite
+# Mini Seller - Lead Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React-based lead management application that helps sales teams track, manage, and convert leads into opportunities. Built with TypeScript, React 19, and a clean architecture approach.
 
-Currently, two official plugins are available:
+## Description
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Mini Seller is a comprehensive lead management system that provides:
 
-## Expanding the ESLint configuration
+- **Lead Management**: View, filter, and manage leads with different statuses (new, contacted, qualified, disqualified)
+- **Lead Conversion**: Convert qualified leads into sales opportunities
+- **Opportunity Tracking**: Manage opportunities through different sales stages
+- **Dashboard Analytics**: View key metrics including lead count, conversion rates, and total value
+- **Responsive Design**: Modern UI built with Tailwind CSS that works on all devices
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Technologies Used
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Core Technologies
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- **React 19.1.1** - Modern React with latest features
+- **TypeScript 5.8.3** - Type-safe development
+- **Vite 7.1.2** - Fast build tool and development server
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### State Management & Data Fetching
+
+- **@tanstack/react-query 5.85.3** - Server state management and caching
+- **React Hook Form 7.62.0** - Form handling and validation
+- **Zod 4.0.17** - Schema validation
+
+### UI & Styling
+
+- **Tailwind CSS 3.4.0** - Utility-first CSS framework
+- **Heroicons 2.2.0** - Beautiful SVG icons
+- **React Toastify 11.0.5** - Toast notifications
+- **React Window 1.8.11** - Virtualized lists for performance
+
+### Development Tools
+
+- **ESLint 9.33.0** - Code linting
+- **Vitest 3.2.4** - Unit testing framework
+- **Testing Library** - React component testing
+- **PostCSS & Autoprefixer** - CSS processing
+
+## Architecture
+
+The project follows a **Feature-Sliced Design (FSD)** architecture pattern, organizing code by business features rather than technical concerns:
+
+### Key Architectural Principles
+
+1. **Separation of Concerns**: Each layer has a specific responsibility
+2. **Feature Isolation**: Features are self-contained with their own logic and UI
+3. **Shared Resources**: Common utilities and components are shared across features
+4. **Type Safety**: Full TypeScript coverage with strict typing
+5. **Testability**: Comprehensive test coverage with isolated unit tests
+
+## Installation
+
+### Prerequisites
+
+- Node.js 18+
+- Yarn package manager
+
+### Setup
+
+1. Clone the repository:
+
+```bash
+git clone <repository-url>
+cd mini-seller
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Install dependencies:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+yarn install
+```
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Execution
+
+### Development
+
+Start the development server:
+
+```bash
+yarn dev
+```
+
+The application will be available at `http://localhost:5173`
+
+### Testing
+
+Run tests in watch mode:
+
+```bash
+yarn test
 ```
