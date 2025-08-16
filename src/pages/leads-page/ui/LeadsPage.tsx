@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { LeadsList } from "@/features/leads-management";
+import LeadSlideOver from "@/features/leads-management/ui/LeadSlideOver";
 import type { Lead } from "@/entities/lead";
 
 const LeadsPage: React.FC = () => {
+  const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
+  const [isSlideOverOpen, setIsSlideOverOpen] = useState(false);
+
   const handleLeadSelect = (lead: Lead) => {
-    console.log("Selected lead:", lead);
+    setSelectedLead(lead);
+    setIsSlideOverOpen(true);
+  };
+
+  const handleCloseSlideOver = () => {
+    setIsSlideOverOpen(false);
+    setSelectedLead(null);
   };
 
   return (
@@ -29,6 +39,12 @@ const LeadsPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      <LeadSlideOver
+        lead={selectedLead}
+        isOpen={isSlideOverOpen}
+        onClose={handleCloseSlideOver}
+      />
     </div>
   );
 };

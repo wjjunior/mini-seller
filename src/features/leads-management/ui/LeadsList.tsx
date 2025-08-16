@@ -6,6 +6,7 @@ import LeadsFilter from "./LeadsFilter";
 import SortableTable from "@/shared/ui/SortableTable";
 import type { SortableColumn } from "@/shared/ui/SortableTable";
 import { STORAGE_KEYS } from "@/shared/constants/storage";
+import { getStatusColor, getScoreColor } from "../lib/helpers";
 
 interface LeadsListProps {
   onLeadSelect: (lead: Lead) => void;
@@ -20,27 +21,6 @@ const LeadsList: React.FC<LeadsListProps> = ({ onLeadSelect }) => {
     setStatusFilter,
     filteredAndSortedLeads,
   } = useLeadsFilter(leads);
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "new":
-        return "bg-blue-100 text-blue-800";
-      case "contacted":
-        return "bg-yellow-100 text-yellow-800";
-      case "qualified":
-        return "bg-green-100 text-green-800";
-      case "disqualified":
-        return "bg-red-100 text-red-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
-
-  const getScoreColor = (score: number) => {
-    if (score >= 90) return "text-green-600";
-    if (score >= 80) return "text-yellow-600";
-    return "text-red-600";
-  };
 
   const columns: SortableColumn<Lead>[] = [
     {
