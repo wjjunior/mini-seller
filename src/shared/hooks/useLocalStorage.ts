@@ -24,25 +24,7 @@ export function useLocalStorage<T>(
 ): [T, (value: T | ((prev: T) => T)) => void, () => void] {
   const { serializer = defaultSerializer, onError = defaultOnError } = options;
 
-  const getStoredValue = useCallback((): T => {
-    try {
-      if (typeof window === "undefined") {
-        return initialValue;
-      }
-
-      const item = window.localStorage.getItem(key);
-      if (item === null) {
-        return initialValue;
-      }
-
-      return serializer.parse(item);
-    } catch (error) {
-      onError(error as Error);
-      return initialValue;
-    }
-  }, [key, initialValue, serializer, onError]);
-
-  const [storedValue, setStoredValue] = useState<T>(getStoredValue);
+  const [storedValue, setStoredValue] = useState<T>(initialValue);
 
   const setValue = useCallback(
     (value: T | ((prev: T) => T)) => {
@@ -76,8 +58,20 @@ export function useLocalStorage<T>(
   }, [key, initialValue, onError]);
 
   useEffect(() => {
-    setStoredValue(getStoredValue());
-  }, [getStoredValue]);
+    try {
+      if (typeof window === "undefined") {
+        return;
+      }
+
+      const item = window.localStorage.getItem(key);
+      if (item !== null) {
+        const parsedValue = serializer.parse(item);
+        setStoredValue(parsedValue);
+      }
+    } catch (error) {
+      onError(error as Error);
+    }
+  }, [key, serializer, onError]);
 
   return [storedValue, setValue, removeValue];
 }

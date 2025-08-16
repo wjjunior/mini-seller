@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { LeadsList } from "@/features/leads-management";
+import {
+  LeadsList,
+  useLeads,
+  useOpportunities,
+} from "@/features/leads-management";
 import LeadDetail from "@/features/leads-management/ui/LeadDetail";
 import { useUpdateLead } from "@/features/leads-management/lib/useUpdateLead";
-import { Tabs } from "@/shared/ui";
+import { Header, Dashboard } from "@/shared/ui";
 import { OpportunitiesTable } from "@/features/leads-management/ui/opportunities";
-import { useOpportunities } from "@/features/leads-management/lib/opportunities";
 import type { Lead } from "@/entities/lead";
 import type { LeadEditFormData } from "@/features/leads-management/lib/validation";
 import type { CreateOpportunityData } from "@/features/leads-management/types";
@@ -13,12 +16,13 @@ import type { CreateOpportunityData } from "@/features/leads-management/types";
 const LeadsPage: React.FC = () => {
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
   const [isSlideOverOpen, setIsSlideOverOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("leads");
+  const [activeTab, setActiveTab] = useState("dashboard");
   const [newlyCreatedOpportunityId, setNewlyCreatedOpportunityId] = useState<
     string | null
   >(null);
   const updateLeadMutation = useUpdateLead();
   const opportunitiesHook = useOpportunities();
+  const { data: leads = [] } = useLeads();
 
   const handleLeadSelect = (lead: Lead) => {
     setSelectedLead(lead);
@@ -65,48 +69,52 @@ const LeadsPage: React.FC = () => {
   };
 
   const isLeadAlreadyConverted = (leadId: string): boolean => {
-    const existingOpportunities = opportunitiesHook.getOpportunitiesByLeadId(leadId);
+    const existingOpportunities =
+      opportunitiesHook.getOpportunitiesByLeadId(leadId);
     return existingOpportunities.length > 0;
   };
 
-  return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="px-4 py-6 sm:px-0">
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">
-              Mini Seller Console
-            </h1>
-            <p className="mt-2 text-gray-600">
-              Triage leads and convert them into opportunities
-            </p>
-          </div>
-
-          <Tabs
-            tabs={[
-              {
-                id: "leads",
-                label: "Leads",
-                content: (
-                  <div className="space-y-6">
-                    <LeadsList onLeadSelect={handleLeadSelect} />
-                  </div>
-                ),
-              },
-              {
-                id: "opportunities",
-                label: "Opportunities",
-                content: (
-                  <OpportunitiesTable
-                    opportunities={opportunitiesHook.opportunities}
-                    newlyCreatedOpportunityId={newlyCreatedOpportunityId}
-                  />
-                ),
-              },
-            ]}
-            activeTab={activeTab}
-            onTabChange={setActiveTab}
+  const renderContent = () => {
+    switch (activeTab) {
+      case "dashboard":
+        return (
+          <Dashboard
+            leadsCount={leads.length}
+            opportunitiesCount={opportunitiesHook.opportunities.length}
+            conversionRate={
+              leads.length > 0
+                ? Math.round(
+                    (opportunitiesHook.opportunities.length / leads.length) *
+                      100
+                  )
+                : 0
+            }
+            totalValue={opportunitiesHook.opportunities.reduce(
+              (sum, opp) => sum + (opp.amount || 0),
+              0
+            )}
           />
+        );
+      case "leads":
+        return <LeadsList onLeadSelect={handleLeadSelect} />;
+      case "opportunities":
+        return (
+          <OpportunitiesTable
+            opportunities={opportunitiesHook.opportunities}
+            newlyCreatedOpportunityId={newlyCreatedOpportunityId}
+          />
+        );
+      default:
+        return <LeadsList onLeadSelect={handleLeadSelect} />;
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Header activeTab={activeTab} onTabChange={setActiveTab} />
+      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div className="px-4 py-6 sm:px-0">
+          {renderContent()}
 
           <LeadDetail
             lead={selectedLead}
@@ -114,10 +122,12 @@ const LeadsPage: React.FC = () => {
             onClose={handleCloseSlideOver}
             onUpdate={handleUpdateLead}
             onConvertToOpportunity={handleConvertToOpportunity}
-            isLeadAlreadyConverted={selectedLead ? isLeadAlreadyConverted(selectedLead.id) : false}
+            isLeadAlreadyConverted={
+              selectedLead ? isLeadAlreadyConverted(selectedLead.id) : false
+            }
           />
         </div>
-      </div>
+      </main>
     </div>
   );
 };

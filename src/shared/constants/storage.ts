@@ -3,4 +3,4 @@ export const STORAGE_KEYS = {
   LEADS_TABLE_SORT: "leads-table-sort",
 } as const;
 
-export type StorageKey = typeof STORAGE_KEYS[keyof typeof STORAGE_KEYS];
+export type StorageKey = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];

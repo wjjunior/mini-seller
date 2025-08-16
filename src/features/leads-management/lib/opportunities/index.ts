@@ -1,1 +1,1 @@
-export { default as useOpportunities } from "./useOpportunities";
+export { default } from "./useOpportunities";

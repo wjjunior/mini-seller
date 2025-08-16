@@ -41,7 +41,7 @@ const SlideOver: React.FC<SlideOverProps> = ({
       >
         <div className={`w-screen ${maxWidthClasses[maxWidth]}`}>
           <div className="h-full flex flex-col bg-white shadow-xl">
-            <div className="px-4 py-6 bg-gray-50 sm:px-6">
+            <div className="flex-shrink-0 px-4 py-6 bg-gray-50 sm:px-6">
               <div className="flex items-start justify-between">
                 <h2 className="text-lg font-medium text-gray-900">{title}</h2>
                 <button
@@ -67,8 +67,10 @@ const SlideOver: React.FC<SlideOverProps> = ({
               </div>
             </div>
 
-            <div className="relative flex-1 px-4 sm:px-6">
-              <div className="space-y-6 py-6">{children}</div>
+            <div className="flex-1 overflow-y-auto">
+              <div className="px-4 sm:px-6">
+                <div className="space-y-6 py-6">{children}</div>
+              </div>
             </div>
           </div>
         </div>
