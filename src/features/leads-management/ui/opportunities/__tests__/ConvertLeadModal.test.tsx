@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import ConvertLeadModal from "../ConvertLeadModal";
-import { createMockLead, createMockEventHandlers } from "src/test/helpers";
+import { createMockLead, createMockEventHandlers } from "@/test/helpers";
 
 const mockLead = createMockLead({
   email: "john@example.com",

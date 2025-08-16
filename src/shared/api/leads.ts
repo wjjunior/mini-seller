@@ -1,5 +1,5 @@
 import leadsData from "../../data/leads.json";
-import type { Lead, Opportunity } from "../types";
+import type { Lead } from "@/entities/lead";
 
 const simulateLatency = (ms: number = 500) =>
   new Promise((resolve) => setTimeout(resolve, ms));
@@ -15,7 +15,7 @@ export const updateLead = async (
 ): Promise<Lead> => {
   await simulateLatency();
 
-  const lead = leadsData.find((l) => l.id === leadId);
+  const lead = (leadsData as Lead[]).find((l) => l.id === leadId);
   if (!lead) {
     throw new Error("Lead not found");
   }
@@ -27,26 +27,4 @@ export const updateLead = async (
   }
 
   return updatedLead;
-};
-
-export const convertToOpportunity = async (
-  lead: Lead,
-  amount?: number
-): Promise<Opportunity> => {
-  await simulateLatency();
-
-  const opportunity: Opportunity = {
-    id: `opp_${Date.now()}`,
-    name: lead.name,
-    stage: "prospecting",
-    amount,
-    accountName: lead.company,
-    createdAt: new Date().toISOString(),
-  };
-
-  if (Math.random() < 0.1) {
-    throw new Error("Simulated conversion error");
-  }
-
-  return opportunity;
 };

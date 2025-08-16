@@ -10,7 +10,7 @@ import {
   createMockUseLeadsReturn,
   createMockUseLeadsFilterReturn,
   createWrapper,
-} from "src/test/helpers";
+} from "@/test/helpers";
 
 vi.mock("../../lib/useLeads", () => ({
   useLeads: vi.fn(),
