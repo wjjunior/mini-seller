@@ -8,6 +8,8 @@ import type { SortableColumn } from "@/shared/ui/VirtualizedTable";
 import { STORAGE_KEYS } from "@/shared/constants/storage";
 import { getStatusColor, getScoreColor } from "../lib/helpers";
 import { useContainerHeight } from "@/shared/hooks/useContainerHeight";
+import useIsMobile from "@/shared/hooks/useIsMobile";
+import LeadsGrid from "./LeadsGrid";
 
 interface LeadsListProps {
   onLeadSelect: (lead: Lead) => void;
@@ -23,6 +25,7 @@ const LeadsList: React.FC<LeadsListProps> = ({ onLeadSelect }) => {
     filteredAndSortedLeads,
   } = useLeadsFilter(leads);
   const { containerRef, height: containerHeight } = useContainerHeight();
+  const isMobile = useIsMobile();
 
   const columns: SortableColumn<Lead>[] = [
     {
@@ -108,20 +111,33 @@ const LeadsList: React.FC<LeadsListProps> = ({ onLeadSelect }) => {
       />
 
       <div ref={containerRef} className="flex-1 min-h-0">
-        <VirtualizedTable
-          data={filteredAndSortedLeads}
-          columns={columns}
-          onRowClick={onLeadSelect}
-          emptyMessage={
-            leads.length === 0
-              ? "No leads found"
-              : "No leads match your search criteria"
-          }
-          initialSortConfig={{ key: "score", direction: "desc" }}
-          storageKey={STORAGE_KEYS.LEADS_TABLE_SORT}
-          height={containerHeight}
-          rowHeight={60}
-        />
+        {isMobile ? (
+          <LeadsGrid
+            leads={filteredAndSortedLeads}
+            onLeadSelect={onLeadSelect}
+            emptyMessage={
+              leads.length === 0
+                ? "No leads found"
+                : "No leads match your search criteria"
+            }
+            itemsPerPage={8}
+          />
+        ) : (
+          <VirtualizedTable
+            data={filteredAndSortedLeads}
+            columns={columns}
+            onRowClick={onLeadSelect}
+            emptyMessage={
+              leads.length === 0
+                ? "No leads found"
+                : "No leads match your search criteria"
+            }
+            initialSortConfig={{ key: "score", direction: "desc" }}
+            storageKey={STORAGE_KEYS.LEADS_TABLE_SORT}
+            height={containerHeight}
+            rowHeight={60}
+          />
+        )}
       </div>
     </div>
   );
