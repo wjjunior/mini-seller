@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PencilIcon, CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  PencilIcon,
+  CheckIcon,
+  XMarkIcon,
+  ExclamationTriangleIcon,
+} from "@heroicons/react/24/outline";
 import type { Lead } from "@/entities/lead";
 import { SlideOver } from "@/shared/ui";
 import { getStatusColor, getScoreColor } from "../lib/helpers";
@@ -11,7 +16,7 @@ interface LeadDetailProps {
   lead: Lead | null;
   isOpen: boolean;
   onClose: () => void;
-  onUpdate?: (leadId: string, data: LeadEditFormData) => void;
+  onUpdate?: (leadId: string, data: LeadEditFormData) => Promise<void>;
 }
 
 const LeadDetail: React.FC<LeadDetailProps> = ({
@@ -23,6 +28,8 @@ const LeadDetail: React.FC<LeadDetailProps> = ({
   const [editingField, setEditingField] = useState<"email" | "status" | null>(
     null
   );
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   const {
     register,
@@ -47,17 +54,37 @@ const LeadDetail: React.FC<LeadDetailProps> = ({
 
   const handleEdit = (field: "email" | "status") => {
     setEditingField(field);
+    setSaveError(null);
+
+    if (lead) {
+      reset({
+        email: lead.email,
+        status: lead.status,
+      });
+    }
   };
 
   const handleCancel = () => {
     setEditingField(null);
+    setSaveError(null);
     reset();
   };
 
   const onSubmit = async (data: LeadEditFormData) => {
     if (lead && onUpdate) {
-      onUpdate(lead.id, data);
-      setEditingField(null);
+      setIsSaving(true);
+      setSaveError(null);
+
+      try {
+        await onUpdate(lead.id, data);
+        setEditingField(null);
+      } catch (error) {
+        setSaveError(
+          error instanceof Error ? error.message : "Failed to save changes"
+        );
+      } finally {
+        setIsSaving(false);
+      }
     }
   };
 
@@ -79,6 +106,15 @@ const LeadDetail: React.FC<LeadDetailProps> = ({
             <p className="text-lg text-gray-600 font-medium">{lead.company}</p>
           </div>
 
+          {saveError && (
+            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+              <div className="flex items-center">
+                <ExclamationTriangleIcon className="w-5 h-5 text-red-400 mr-2" />
+                <p className="text-sm text-red-700">{saveError}</p>
+              </div>
+            </div>
+          )}
+
           <div className="space-y-6 py-4">
             <div className="bg-gray-50 rounded-lg p-4">
               <div className="flex items-center mb-3">
@@ -98,6 +134,7 @@ const LeadDetail: React.FC<LeadDetailProps> = ({
                         {...register("email")}
                         className="w-full px-3 py-2 border border-gray-300 rounded-lg text-base text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         placeholder="Enter email address"
+                        disabled={isSaving}
                       />
                       {errors.email && (
                         <p className="text-sm text-red-600">
@@ -107,16 +144,17 @@ const LeadDetail: React.FC<LeadDetailProps> = ({
                       <div className="flex space-x-2">
                         <button
                           type="submit"
-                          disabled={isSubmitting}
-                          className="flex items-center px-3 py-1 bg-green-600 text-white text-sm rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50"
+                          disabled={isSaving || isSubmitting}
+                          className="flex items-center px-3 py-1 bg-green-600 text-white text-sm rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           <CheckIcon className="w-4 h-4 mr-1" />
-                          Save
+                          {isSaving ? "Saving..." : "Save"}
                         </button>
                         <button
                           type="button"
                           onClick={handleCancel}
-                          className="flex items-center px-3 py-1 bg-gray-600 text-white text-sm rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                          disabled={isSaving}
+                          className="flex items-center px-3 py-1 bg-gray-600 text-white text-sm rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                           <XMarkIcon className="w-4 h-4 mr-1" />
                           Cancel
@@ -180,6 +218,7 @@ const LeadDetail: React.FC<LeadDetailProps> = ({
                   <select
                     {...register("status")}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg text-base text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    disabled={isSaving}
                   >
                     {statusOptions.map((option) => (
                       <option key={option.value} value={option.value}>
@@ -195,16 +234,17 @@ const LeadDetail: React.FC<LeadDetailProps> = ({
                   <div className="flex space-x-2">
                     <button
                       type="submit"
-                      disabled={isSubmitting}
-                      className="flex items-center px-3 py-1 bg-green-600 text-white text-sm rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50"
+                      disabled={isSaving || isSubmitting}
+                      className="flex items-center px-3 py-1 bg-green-600 text-white text-sm rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <CheckIcon className="w-4 h-4 mr-1" />
-                      Save
+                      {isSaving ? "Saving..." : "Save"}
                     </button>
                     <button
                       type="button"
                       onClick={handleCancel}
-                      className="flex items-center px-3 py-1 bg-gray-600 text-white text-sm rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                      disabled={isSaving}
+                      className="flex items-center px-3 py-1 bg-gray-600 text-white text-sm rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <XMarkIcon className="w-4 h-4 mr-1" />
                       Cancel

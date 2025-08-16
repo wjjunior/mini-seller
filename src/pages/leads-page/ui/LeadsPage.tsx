@@ -29,6 +29,7 @@ const LeadsPage: React.FC = () => {
       setSelectedLead(updatedLead);
     } catch (error) {
       console.error("Failed to update lead:", error);
+      throw error;
     }
   };
 

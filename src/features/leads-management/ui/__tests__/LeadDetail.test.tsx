@@ -62,12 +62,9 @@ describe("LeadDetail", () => {
       />
     );
 
-    const editButtons = screen.getAllByRole("button");
-    const emailEditButton = editButtons.find((button) =>
-      button.closest("div")?.textContent?.includes("john@example.com")
-    );
-
-    expect(emailEditButton).toBeInTheDocument();
+    const emailSection = screen.getByText("john@example.com").closest("div");
+    const editButton = emailSection?.querySelector("button");
+    expect(editButton).toBeInTheDocument();
   });
 
   it("shows edit button for status field", () => {
@@ -80,12 +77,9 @@ describe("LeadDetail", () => {
       />
     );
 
-    const editButtons = screen.getAllByRole("button");
-    const statusEditButton = editButtons.find((button) =>
-      button.closest("div")?.textContent?.includes("new")
-    );
-
-    expect(statusEditButton).toBeInTheDocument();
+    const statusSection = screen.getByText("new").closest("div");
+    const editButton = statusSection?.querySelector("button");
+    expect(editButton).toBeInTheDocument();
   });
 
   it("enters edit mode for email when edit button is clicked", async () => {
@@ -99,16 +93,16 @@ describe("LeadDetail", () => {
       />
     );
 
-    const editButtons = screen.getAllByRole("button");
-    const emailEditButton = editButtons.find((button) =>
-      button.closest("div")?.textContent?.includes("john@example.com")
-    );
+    const emailSection = screen.getByText("john@example.com").closest("div");
+    const editButton = emailSection?.querySelector("button");
 
-    await user.click(emailEditButton!);
+    await user.click(editButton!);
 
-    expect(screen.getByDisplayValue("john@example.com")).toBeInTheDocument();
-    expect(screen.getByText("Save")).toBeInTheDocument();
-    expect(screen.getByText("Cancel")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByDisplayValue("john@example.com")).toBeInTheDocument();
+      expect(screen.getByText("Save")).toBeInTheDocument();
+      expect(screen.getByText("Cancel")).toBeInTheDocument();
+    });
   });
 
   it("enters edit mode for status when edit button is clicked", async () => {
@@ -122,16 +116,16 @@ describe("LeadDetail", () => {
       />
     );
 
-    const editButtons = screen.getAllByRole("button");
-    const statusEditButton = editButtons.find((button) =>
-      button.closest("div")?.textContent?.includes("new")
-    );
+    const statusSection = screen.getByText("new").closest("div");
+    const editButton = statusSection?.querySelector("button");
 
-    await user.click(statusEditButton!);
+    await user.click(editButton!);
 
-    expect(screen.getByDisplayValue("new")).toBeInTheDocument();
-    expect(screen.getByText("Save")).toBeInTheDocument();
-    expect(screen.getByText("Cancel")).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByDisplayValue("New")).toBeInTheDocument();
+      expect(screen.getByText("Save")).toBeInTheDocument();
+      expect(screen.getByText("Cancel")).toBeInTheDocument();
+    });
   });
 
   it("validates email format and shows error for invalid email", async () => {
@@ -145,23 +139,23 @@ describe("LeadDetail", () => {
       />
     );
 
-    const editButtons = screen.getAllByRole("button");
-    const emailEditButton = editButtons.find((button) =>
-      button.closest("div")?.textContent?.includes("john@example.com")
-    );
+    const emailSection = screen.getByText("john@example.com").closest("div");
+    const editButton = emailSection?.querySelector("button");
 
-    await user.click(emailEditButton!);
+    await user.click(editButton!);
 
-    const emailInput = screen.getByDisplayValue("john@example.com");
-    await user.clear(emailInput);
+    const emailInput = screen.getByPlaceholderText("Enter email address");
     await user.type(emailInput, "invalid-email");
 
     const saveButton = screen.getByText("Save");
     await user.click(saveButton);
 
-    await waitFor(() => {
-      expect(screen.getByText("Invalid email format")).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(screen.getByText("Invalid email format")).toBeInTheDocument();
+      },
+      { timeout: 3000 }
+    );
   });
 
   it("calls onUpdate when valid email is submitted", async () => {
@@ -175,12 +169,10 @@ describe("LeadDetail", () => {
       />
     );
 
-    const editButtons = screen.getAllByRole("button");
-    const emailEditButton = editButtons.find((button) =>
-      button.closest("div")?.textContent?.includes("john@example.com")
-    );
+    const emailSection = screen.getByText("john@example.com").closest("div");
+    const editButton = emailSection?.querySelector("button");
 
-    await user.click(emailEditButton!);
+    await user.click(editButton!);
 
     const emailInput = screen.getByDisplayValue("john@example.com");
     await user.clear(emailInput);
@@ -208,14 +200,12 @@ describe("LeadDetail", () => {
       />
     );
 
-    const editButtons = screen.getAllByRole("button");
-    const statusEditButton = editButtons.find((button) =>
-      button.closest("div")?.textContent?.includes("new")
-    );
+    const statusSection = screen.getByText("new").closest("div");
+    const editButton = statusSection?.querySelector("button");
 
-    await user.click(statusEditButton!);
+    await user.click(editButton!);
 
-    const statusSelect = screen.getByDisplayValue("new");
+    const statusSelect = screen.getByDisplayValue("New");
     await user.selectOptions(statusSelect, "qualified");
 
     const saveButton = screen.getByText("Save");
@@ -240,20 +230,120 @@ describe("LeadDetail", () => {
       />
     );
 
-    const editButtons = screen.getAllByRole("button");
-    const emailEditButton = editButtons.find((button) =>
-      button.closest("div")?.textContent?.includes("john@example.com")
-    );
+    const emailSection = screen.getByText("john@example.com").closest("div");
+    const editButton = emailSection?.querySelector("button");
 
-    await user.click(emailEditButton!);
+    await user.click(editButton!);
+
+    await waitFor(() => {
+      expect(screen.getByDisplayValue("john@example.com")).toBeInTheDocument();
+    });
 
     const cancelButton = screen.getByText("Cancel");
     await user.click(cancelButton);
 
-    expect(
-      screen.queryByDisplayValue("john@example.com")
-    ).not.toBeInTheDocument();
-    expect(screen.queryByText("Save")).not.toBeInTheDocument();
-    expect(screen.queryByText("Cancel")).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(
+        screen.queryByDisplayValue("john@example.com")
+      ).not.toBeInTheDocument();
+      expect(screen.queryByText("Save")).not.toBeInTheDocument();
+      expect(screen.queryByText("Cancel")).not.toBeInTheDocument();
+    });
+  });
+
+  describe("Error Handling", () => {
+    const setupErrorTest = (mockOnUpdate: ReturnType<typeof vi.fn>) => {
+      const user = userEvent.setup();
+      renderWithProviders(
+        <LeadDetail
+          lead={mockLead}
+          isOpen={true}
+          onClose={vi.fn()}
+          onUpdate={mockOnUpdate}
+        />
+      );
+      return user;
+    };
+
+    const findEmailEditButton = () => {
+      const emailSection = screen.getByText("john@example.com").closest("div");
+      return emailSection?.querySelector("button");
+    };
+
+    const createDelayedPromise = () => {
+      let resolvePromise: (value: unknown) => void;
+      const promise = new Promise((resolve) => {
+        resolvePromise = resolve;
+      });
+      return { promise, resolve: resolvePromise! };
+    };
+
+    it("shows error message when save fails", async () => {
+      const mockOnUpdateWithError = vi
+        .fn()
+        .mockRejectedValue(new Error("Network error"));
+      const user = setupErrorTest(mockOnUpdateWithError);
+
+      const emailEditButton = findEmailEditButton();
+      await user.click(emailEditButton!);
+
+      const saveButton = screen.getByText("Save");
+      await user.click(saveButton);
+
+      await waitFor(() => {
+        expect(screen.getByText("Network error")).toBeInTheDocument();
+      });
+    });
+
+    it("clears error when starting new edit", async () => {
+      const mockOnUpdateWithError = vi
+        .fn()
+        .mockRejectedValue(new Error("Network error"));
+      const user = setupErrorTest(mockOnUpdateWithError);
+
+      const emailEditButton = findEmailEditButton();
+      await user.click(emailEditButton!);
+
+      const saveButton = screen.getByText("Save");
+      await user.click(saveButton);
+
+      await waitFor(() => {
+        expect(screen.getByText("Network error")).toBeInTheDocument();
+      });
+
+      const cancelButton = screen.getByText("Cancel");
+      await user.click(cancelButton);
+
+      expect(screen.queryByText("Network error")).not.toBeInTheDocument();
+    });
+
+    it("disables buttons during save", async () => {
+      const { promise, resolve } = createDelayedPromise();
+      const mockOnUpdateWithDelay = vi.fn().mockImplementation(() => promise);
+      const user = setupErrorTest(mockOnUpdateWithDelay);
+
+      const emailEditButton = findEmailEditButton();
+      await user.click(emailEditButton!);
+
+      await waitFor(() => {
+        expect(
+          screen.getByDisplayValue("john@example.com")
+        ).toBeInTheDocument();
+      });
+
+      const saveButton = screen.getByText("Save");
+      await user.click(saveButton);
+
+      await waitFor(() => {
+        expect(saveButton).toBeDisabled();
+        expect(screen.getByText("Saving...")).toBeInTheDocument();
+      });
+
+      resolve({});
+
+      await waitFor(() => {
+        expect(mockOnUpdateWithDelay).toHaveBeenCalled();
+      });
+    });
   });
 });

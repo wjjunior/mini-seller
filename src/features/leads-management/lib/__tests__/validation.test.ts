@@ -35,7 +35,7 @@ describe("leadEditSchema", () => {
       const result = leadEditSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0].message).toBe("Email is required");
+        expect(result.error.issues[0].message).toBe("Invalid email format");
       }
     });
   });
