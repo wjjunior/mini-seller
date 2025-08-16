@@ -2,13 +2,18 @@ import React, { useState } from "react";
 import { LeadsList } from "@/features/leads-management";
 import LeadDetail from "@/features/leads-management/ui/LeadDetail";
 import { useUpdateLead } from "@/features/leads-management/lib/useUpdateLead";
+import { Tabs, OpportunitiesTable } from "@/shared/ui";
+import useOpportunities from "@/shared/hooks/useOpportunities";
 import type { Lead } from "@/entities/lead";
 import type { LeadEditFormData } from "@/features/leads-management/lib/validation";
+import type { CreateOpportunityData } from "@/shared/types/opportunity";
 
 const LeadsPage: React.FC = () => {
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
   const [isSlideOverOpen, setIsSlideOverOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("leads");
   const updateLeadMutation = useUpdateLead();
+  const opportunitiesHook = useOpportunities();
 
   const handleLeadSelect = (lead: Lead) => {
     setSelectedLead(lead);
@@ -33,6 +38,15 @@ const LeadsPage: React.FC = () => {
     }
   };
 
+  const handleConvertToOpportunity = async (data: CreateOpportunityData) => {
+    try {
+      await opportunitiesHook.createOpportunity(data);
+    } catch (error) {
+      console.error("Failed to convert lead to opportunity:", error);
+      throw error;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
@@ -46,13 +60,31 @@ const LeadsPage: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-8">
-            <div>
-              <div className="space-y-6">
-                <LeadsList onLeadSelect={handleLeadSelect} />
-              </div>
-            </div>
-          </div>
+          <Tabs
+            tabs={[
+              {
+                id: "leads",
+                label: "Leads",
+                content: (
+                  <div className="space-y-6">
+                    <LeadsList onLeadSelect={handleLeadSelect} />
+                  </div>
+                ),
+              },
+              {
+                id: "opportunities",
+                label: "Opportunities",
+                content: (
+                  <OpportunitiesTable
+                    opportunities={opportunitiesHook.opportunities}
+                    isLoading={opportunitiesHook.isLoading}
+                  />
+                ),
+              },
+            ]}
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+          />
         </div>
       </div>
 
@@ -61,6 +93,7 @@ const LeadsPage: React.FC = () => {
         isOpen={isSlideOverOpen}
         onClose={handleCloseSlideOver}
         onUpdate={handleUpdateLead}
+        onConvertToOpportunity={handleConvertToOpportunity}
       />
     </div>
   );

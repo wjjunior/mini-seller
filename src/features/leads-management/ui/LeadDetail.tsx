@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PencilIcon, CheckIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { PencilIcon, CheckIcon, XMarkIcon, ArrowUpIcon } from "@heroicons/react/24/outline";
 import type { Lead } from "@/entities/lead";
-import { SlideOver } from "@/shared/ui";
+import { SlideOver, ConvertLeadModal } from "@/shared/ui";
 import { getStatusColor, getScoreColor } from "../lib/helpers";
 import { leadEditSchema, type LeadEditFormData } from "../lib/validation";
+import type { CreateOpportunityData } from "@/shared/types/opportunity";
 
 interface LeadDetailProps {
   lead: Lead | null;
   isOpen: boolean;
   onClose: () => void;
   onUpdate?: (leadId: string, data: LeadEditFormData) => Promise<void>;
+  onConvertToOpportunity?: (data: CreateOpportunityData) => Promise<void>;
 }
 
 const LeadDetail: React.FC<LeadDetailProps> = ({
@@ -19,10 +21,12 @@ const LeadDetail: React.FC<LeadDetailProps> = ({
   isOpen,
   onClose,
   onUpdate,
+  onConvertToOpportunity,
 }) => {
   const [editingField, setEditingField] = useState<"email" | "status" | null>(
     null
   );
+  const [isConvertModalOpen, setIsConvertModalOpen] = useState(false);
 
   const {
     register,
@@ -247,7 +251,15 @@ const LeadDetail: React.FC<LeadDetailProps> = ({
             </div>
           </div>
 
-          <div className="flex justify-end space-x-3 pt-6 border-t border-gray-200">
+          <div className="flex justify-between items-center pt-6 border-t border-gray-200">
+            <button
+              type="button"
+              className="flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
+              onClick={() => setIsConvertModalOpen(true)}
+            >
+              <ArrowUpIcon className="w-4 h-4 mr-2" />
+              Convert Lead
+            </button>
             <button
               type="button"
               className="px-6 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors"
@@ -258,6 +270,13 @@ const LeadDetail: React.FC<LeadDetailProps> = ({
           </div>
         </form>
       )}
+
+      <ConvertLeadModal
+        isOpen={isConvertModalOpen}
+        onClose={() => setIsConvertModalOpen(false)}
+        onSubmit={onConvertToOpportunity || (() => Promise.resolve())}
+        lead={lead}
+      />
     </SlideOver>
   );
 };
