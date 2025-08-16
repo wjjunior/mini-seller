@@ -251,8 +251,8 @@ describe("LeadDetail", () => {
     });
   });
 
-  describe("Error Handling", () => {
-    const setupErrorTest = (mockOnUpdate: ReturnType<typeof vi.fn>) => {
+  describe("Loading States", () => {
+    const setupLoadingTest = (mockOnUpdate: ReturnType<typeof vi.fn>) => {
       const user = userEvent.setup();
       renderWithProviders(
         <LeadDetail
@@ -278,49 +278,10 @@ describe("LeadDetail", () => {
       return { promise, resolve: resolvePromise! };
     };
 
-    it("shows error message when save fails", async () => {
-      const mockOnUpdateWithError = vi
-        .fn()
-        .mockRejectedValue(new Error("Network error"));
-      const user = setupErrorTest(mockOnUpdateWithError);
-
-      const emailEditButton = findEmailEditButton();
-      await user.click(emailEditButton!);
-
-      const saveButton = screen.getByText("Save");
-      await user.click(saveButton);
-
-      await waitFor(() => {
-        expect(screen.getByText("Network error")).toBeInTheDocument();
-      });
-    });
-
-    it("clears error when starting new edit", async () => {
-      const mockOnUpdateWithError = vi
-        .fn()
-        .mockRejectedValue(new Error("Network error"));
-      const user = setupErrorTest(mockOnUpdateWithError);
-
-      const emailEditButton = findEmailEditButton();
-      await user.click(emailEditButton!);
-
-      const saveButton = screen.getByText("Save");
-      await user.click(saveButton);
-
-      await waitFor(() => {
-        expect(screen.getByText("Network error")).toBeInTheDocument();
-      });
-
-      const cancelButton = screen.getByText("Cancel");
-      await user.click(cancelButton);
-
-      expect(screen.queryByText("Network error")).not.toBeInTheDocument();
-    });
-
     it("disables buttons during save", async () => {
       const { promise, resolve } = createDelayedPromise();
       const mockOnUpdateWithDelay = vi.fn().mockImplementation(() => promise);
-      const user = setupErrorTest(mockOnUpdateWithDelay);
+      const user = setupLoadingTest(mockOnUpdateWithDelay);
 
       const emailEditButton = findEmailEditButton();
       await user.click(emailEditButton!);

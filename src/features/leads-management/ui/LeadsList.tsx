@@ -3,7 +3,7 @@ import type { Lead } from "@/entities/lead";
 import { useLeads } from "../lib/useLeads";
 import { useLeadsFilter } from "../lib/useLeadsFilter";
 import LeadsFilter from "./LeadsFilter";
-import SortableTable from "@/shared/ui/SortableTable";
+import { SortableTable, LoadingSpinner, ErrorMessage } from "@/shared/ui";
 import type { SortableColumn } from "@/shared/ui/SortableTable";
 import { STORAGE_KEYS } from "@/shared/constants/storage";
 import { getStatusColor, getScoreColor } from "../lib/helpers";
@@ -76,29 +76,15 @@ const LeadsList: React.FC<LeadsListProps> = ({ onLeadSelect }) => {
   ];
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center h-64">
-        <output
-          aria-label="Loading leads"
-          className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"
-        ></output>
-      </div>
-    );
+    return <LoadingSpinner size="md" label="Loading leads" className="h-64" />;
   }
 
   if (error) {
     return (
-      <div className="text-center py-8">
-        <p className="text-red-600 mb-4">
-          Failed to load leads. Please try again.
-        </p>
-        <button
-          onClick={() => refetch()}
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
-          Retry
-        </button>
-      </div>
+      <ErrorMessage
+        message="Failed to load leads. Please try again."
+        onRetry={refetch}
+      />
     );
   }
 
