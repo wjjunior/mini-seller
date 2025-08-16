@@ -3,13 +3,13 @@ import type { Lead } from "@/entities/lead";
 import { SlideOver } from "@/shared/ui";
 import { getStatusColor, getScoreColor } from "../lib/helpers";
 
-interface LeadSlideOverProps {
+interface LeadDetailProps {
   lead: Lead | null;
   isOpen: boolean;
   onClose: () => void;
 }
 
-const LeadSlideOver: React.FC<LeadSlideOverProps> = ({
+const LeadDetail: React.FC<LeadDetailProps> = ({
   lead,
   isOpen,
   onClose,
@@ -111,4 +111,4 @@ const LeadSlideOver: React.FC<LeadSlideOverProps> = ({
   );
 };
 
-export default LeadSlideOver;
+export default LeadDetail;

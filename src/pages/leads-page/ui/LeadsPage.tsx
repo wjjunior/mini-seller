@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { LeadsList } from "@/features/leads-management";
-import LeadSlideOver from "@/features/leads-management/ui/LeadSlideOver";
+import LeadDetail from "@/features/leads-management/ui/LeadDetail";
 import type { Lead } from "@/entities/lead";
 
 const LeadsPage: React.FC = () => {
@@ -40,7 +40,7 @@ const LeadsPage: React.FC = () => {
         </div>
       </div>
 
-      <LeadSlideOver
+      <LeadDetail
         lead={selectedLead}
         isOpen={isSlideOverOpen}
         onClose={handleCloseSlideOver}
