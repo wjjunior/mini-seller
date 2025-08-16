@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { LeadsList } from "@/features/leads-management";
 import LeadDetail from "@/features/leads-management/ui/LeadDetail";
 import { useUpdateLead } from "@/features/leads-management/lib/useUpdateLead";
-import { Tabs, OpportunitiesTable } from "@/shared/ui";
-import useOpportunities from "@/shared/hooks/useOpportunities";
+import { Tabs } from "@/shared/ui";
+import { OpportunitiesTable } from "@/features/leads-management/ui/opportunities";
+import { useOpportunities } from "@/features/leads-management/lib/opportunities";
 import type { Lead } from "@/entities/lead";
 import type { LeadEditFormData } from "@/features/leads-management/lib/validation";
-import type { CreateOpportunityData } from "@/shared/types/opportunity";
+import type { CreateOpportunityData } from "@/features/leads-management/types";
 
 const LeadsPage: React.FC = () => {
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);

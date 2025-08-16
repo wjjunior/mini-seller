@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import type { CreateOpportunityData } from "@/shared/types/opportunity";
-import { STAGE_OPTIONS } from "@/shared/types/opportunity";
+import type { CreateOpportunityData } from "@/features/leads-management/types";
+import { STAGE_OPTIONS } from "@/features/leads-management/types";
 import type { Lead } from "@/entities/lead";
 
 const convertLeadSchema = z.object({

@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { PencilIcon, CheckIcon, XMarkIcon, ArrowUpIcon } from "@heroicons/react/24/outline";
+import {
+  PencilIcon,
+  CheckIcon,
+  XMarkIcon,
+  ArrowUpIcon,
+} from "@heroicons/react/24/outline";
 import type { Lead } from "@/entities/lead";
-import { SlideOver, ConvertLeadModal } from "@/shared/ui";
+import { SlideOver } from "@/shared/ui";
+import { ConvertLeadModal } from "./opportunities";
 import { getStatusColor, getScoreColor } from "../lib/helpers";
 import { leadEditSchema, type LeadEditFormData } from "../lib/validation";
-import type { CreateOpportunityData } from "@/shared/types/opportunity";
+import type { CreateOpportunityData } from "@/features/leads-management/types";
 
 interface LeadDetailProps {
   lead: Lead | null;

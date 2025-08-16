@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import type {
   Opportunity,
   CreateOpportunityData,
-} from "@/shared/types/opportunity";
+} from "@/features/leads-management/types";
 
 const STORAGE_KEY = "opportunities";
 

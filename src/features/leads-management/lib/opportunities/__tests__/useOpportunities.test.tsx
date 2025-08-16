@@ -1,6 +1,6 @@
 import { renderHook, act } from "@testing-library/react";
+import type { CreateOpportunityData } from "@/features/leads-management/types";
 import useOpportunities from "../useOpportunities";
-import type { CreateOpportunityData } from "@/shared/types/opportunity";
 import { describe, beforeEach, it, expect } from "vitest";
 
 describe("useOpportunities", () => {

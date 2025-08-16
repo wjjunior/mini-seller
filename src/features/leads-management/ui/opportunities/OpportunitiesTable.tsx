@@ -1,5 +1,5 @@
 import React from "react";
-import type { Opportunity } from "@/shared/types/opportunity";
+import type { Opportunity } from "@/features/leads-management/types";
 
 interface OpportunitiesTableProps {
   opportunities: Opportunity[];
