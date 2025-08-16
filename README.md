@@ -12,6 +12,10 @@ Mini Seller is a comprehensive lead management system that provides:
 - **Dashboard Analytics**: View key metrics including lead count, conversion rates, and total value
 - **Responsive Design**: Modern UI built with Tailwind CSS that works on all devices
 
+## Live Demo
+
+🌐 **Live Application**: [https://mini-seller-red.vercel.app/](https://mini-seller-red.vercel.app/)
+
 ## Technologies Used
 
 ### Core Technologies
