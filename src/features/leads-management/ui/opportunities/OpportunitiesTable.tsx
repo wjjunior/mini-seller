@@ -4,6 +4,7 @@ import type { Opportunity } from "@/features/leads-management/types";
 interface OpportunitiesTableProps {
   opportunities: Opportunity[];
   isLoading?: boolean;
+  newlyCreatedOpportunityId?: string | null;
 }
 
 const getStageColor = (stage: string): string => {
@@ -37,6 +38,7 @@ const formatDate = (dateString: string): string => {
 const OpportunitiesTable: React.FC<OpportunitiesTableProps> = ({
   opportunities,
   isLoading = false,
+  newlyCreatedOpportunityId = null,
 }) => {
   if (isLoading) {
     return (
@@ -99,7 +101,14 @@ const OpportunitiesTable: React.FC<OpportunitiesTableProps> = ({
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {opportunities.map((opportunity) => (
-                <tr key={opportunity.id} className="hover:bg-gray-50">
+                <tr
+                  key={opportunity.id}
+                  className={`hover:bg-gray-50 ${
+                    newlyCreatedOpportunityId === opportunity.id
+                      ? "animate-pulse bg-blue-50 border-l-4 border-blue-500"
+                      : ""
+                  }`}
+                >
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900">
                       {opportunity.name}

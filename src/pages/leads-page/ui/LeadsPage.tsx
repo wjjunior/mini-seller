@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import { LeadsList } from "@/features/leads-management";
 import LeadDetail from "@/features/leads-management/ui/LeadDetail";
 import { useUpdateLead } from "@/features/leads-management/lib/useUpdateLead";
@@ -13,6 +14,9 @@ const LeadsPage: React.FC = () => {
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
   const [isSlideOverOpen, setIsSlideOverOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("leads");
+  const [newlyCreatedOpportunityId, setNewlyCreatedOpportunityId] = useState<
+    string | null
+  >(null);
   const updateLeadMutation = useUpdateLead();
   const opportunitiesHook = useOpportunities();
 
@@ -33,17 +37,29 @@ const LeadsPage: React.FC = () => {
         data,
       });
       setSelectedLead(updatedLead);
+      toast.success("Lead updated successfully!");
     } catch (error) {
       console.error("Failed to update lead:", error);
+      toast.error("Failed to update lead. Please try again.");
       throw error;
     }
   };
 
   const handleConvertToOpportunity = async (data: CreateOpportunityData) => {
     try {
-      await opportunitiesHook.createOpportunity(data);
+      const newOpportunity = await opportunitiesHook.createOpportunity(data);
+      toast.success("Lead successfully converted to opportunity!");
+
+      setNewlyCreatedOpportunityId(newOpportunity.id);
+      setActiveTab("opportunities");
+      handleCloseSlideOver();
+
+      setTimeout(() => {
+        setNewlyCreatedOpportunityId(null);
+      }, 3000);
     } catch (error) {
       console.error("Failed to convert lead to opportunity:", error);
+      toast.error("Failed to convert lead to opportunity. Please try again.");
       throw error;
     }
   };
@@ -78,7 +94,7 @@ const LeadsPage: React.FC = () => {
                 content: (
                   <OpportunitiesTable
                     opportunities={opportunitiesHook.opportunities}
-                    isLoading={opportunitiesHook.isLoading}
+                    newlyCreatedOpportunityId={newlyCreatedOpportunityId}
                   />
                 ),
               },

@@ -1,41 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import type {
   Opportunity,
   CreateOpportunityData,
 } from "@/features/leads-management/types";
 
-const STORAGE_KEY = "opportunities";
-
 const useOpportunities = () => {
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const loadOpportunities = () => {
-      try {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored) {
-          const parsed = JSON.parse(stored);
-          setOpportunities(Array.isArray(parsed) ? parsed : []);
-        }
-      } catch (error) {
-        console.error("Failed to load opportunities:", error);
-        setOpportunities([]);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadOpportunities();
-  }, []);
-
-  const saveOpportunities = (newOpportunities: Opportunity[]) => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(newOpportunities));
-    } catch (error) {
-      console.error("Failed to save opportunities:", error);
-    }
-  };
 
   const createOpportunity = async (
     data: CreateOpportunityData
@@ -49,7 +19,6 @@ const useOpportunities = () => {
 
     const updatedOpportunities = [...opportunities, newOpportunity];
     setOpportunities(updatedOpportunities);
-    saveOpportunities(updatedOpportunities);
 
     return newOpportunity;
   };
@@ -65,7 +34,6 @@ const useOpportunities = () => {
     );
 
     setOpportunities(updatedOpportunities);
-    saveOpportunities(updatedOpportunities);
 
     const updated = updatedOpportunities.find((opp) => opp.id === id);
     if (!updated) {
@@ -78,7 +46,6 @@ const useOpportunities = () => {
   const deleteOpportunity = async (id: string): Promise<void> => {
     const updatedOpportunities = opportunities.filter((opp) => opp.id !== id);
     setOpportunities(updatedOpportunities);
-    saveOpportunities(updatedOpportunities);
   };
 
   const getOpportunityById = (id: string): Opportunity | undefined => {
@@ -91,7 +58,6 @@ const useOpportunities = () => {
 
   return {
     opportunities,
-    isLoading,
     createOpportunity,
     updateOpportunity,
     deleteOpportunity,
